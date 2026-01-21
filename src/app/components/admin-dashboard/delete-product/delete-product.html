@@ -1,0 +1,15 @@
+<div class="delete-section">
+  <h3 class="form-title">❌ Delete Product</h3>
+
+  <div class="card-container">
+    <div class="product-card" *ngFor="let p of productList; let i = index">
+      <div class="card-header">
+        <h4>{{ p.name }}</h4>
+        <button class="delete-icon" (click)="deleteProduct(i)">Delete</button>
+      </div>
+      <p class="description">{{ p.description }}</p>
+      <p class="price">₹{{ p.price }}</p>
+      <p class="category">{{ p.category }}</p>
+    </div>
+  </div>
+</div>

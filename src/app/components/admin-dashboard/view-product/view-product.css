@@ -1,0 +1,70 @@
+.dashboard-title {
+  margin: 0 0 14px;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: 0.3px;
+  text-shadow: 0 0 14px color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+.card-container {
+  width: 250px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: 16px;
+  align-items: start;
+  min-width: 0; /* critical in grid */
+}
+
+
+.card {
+  background: var(--surface);
+  border: 1px solid #1b2033;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 0 18px rgba(0,0,0,0.35);
+
+  display: grid;
+  grid-template-rows: auto auto auto auto; /* header, desc, price, category */
+  gap: 10px;
+
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  overflow: hidden; /* visual polish */
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+}
+
+.product-name {
+  margin: 0 0 10px;
+  font-size: 20px;
+  color: whitesmoke;
+  font-weight: bold;
+}
+
+.description {
+  font-size: 14px;
+  color: whitesmoke;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-weight: bold;
+  font-size: 16px;
+  color: #6a1b9a; /* green for price */
+  margin-bottom: 6px;
+}
+
+.category {
+  font-size: 13px;
+  color: whitesmoke; /* purple accent */
+  font-style: italic;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

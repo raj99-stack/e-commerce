@@ -1,0 +1,150 @@
+/* ============================================================
+   CART — High-Contrast & Refined Aesthetic
+   ============================================================ */
+
+:host {
+  display: block;
+  padding: 40px 20px;
+}
+
+h3 {
+  text-align: center;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--text);
+  margin-bottom: 40px;
+  opacity: 0.8;
+}
+
+/* -----------------------------------
+   CONTAINER & CARDS
+----------------------------------- */
+.cart-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.cart-card {
+  background: #121212; /* Deep solid dark for contrast */
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #222;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.5s ease backwards;
+}
+
+.cart-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* -----------------------------------
+   TEXT & INFO
+----------------------------------- */
+.cart-card h4 {
+  font-size: 18px;
+  margin: 0 0 15px 0;
+  color: #fff;
+  font-weight: 700;
+}
+
+.cart-card p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #aaa;
+  display: flex;
+  justify-content: space-between;
+}
+
+.cart-card p strong {
+  color: var(--accent);
+}
+
+/* -----------------------------------
+   THE BUTTONS (THE "AWESOME" FIX)
+----------------------------------- */
+.cart-actions {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  gap: 8px;
+}
+
+.cart-actions button {
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 800;
+  font-size: 12px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: filter 0.2s, transform 0.1s;
+}
+
+/* Specific Button Colors for Visibility */
+.remove-btn, .add-btn {
+  background: #2a2a2a;
+  color: white;
+  font-size: 16px !important;
+}
+
+.wishlist-btn {
+  grid-column: span 1;
+  background: var(--accent);
+  color: #000;
+}
+
+.delete-btn {
+  grid-column: span 1;
+  background: #ff4e4e;
+  color: white !important;
+}
+
+.cart-actions button:hover {
+  filter: brightness(1.2);
+}
+
+.cart-actions button:active {
+  transform: scale(0.96);
+}
+
+/* -----------------------------------
+   TOTAL (SLEEK & REFINED)
+----------------------------------- */
+.total {
+  margin-top: 60px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 300;
+  color: #888;
+  border-top: 1px solid #333;
+  padding-top: 30px;
+  letter-spacing: 1px;
+}
+
+.total strong {
+  color: var(--text);
+  font-size: 24px;
+  margin-left: 10px;
+  text-shadow: 0 0 10px color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+/* -----------------------------------
+   ANIMATIONS
+----------------------------------- */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile Tweaks */
+@media (max-width: 400px) {
+  .cart-container { grid-template-columns: 1fr; }
+}

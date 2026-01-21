@@ -1,0 +1,40 @@
+<!-- <h1>{{ title }}</h1> -->
+
+<div *ngIf="loggedInUser">
+
+  <div *ngIf="isCartEmpty()">
+    <app-empty-cart></app-empty-cart>
+  </div>
+
+
+  <div *ngIf="hasCartItems()">
+    <div *ngIf="loggedInUser">
+      <app-cart
+        [cartItems]="loggedInUser.cart"
+        (removeItem)="handleRemove($event)"
+        (addItem)="handleAdd($event)"
+        (deleteItem)="handleDelete($event)"
+        (addToWishlist)="handleAddToWishlist($event)"
+      >
+      </app-cart>
+
+      <app-order-summary [cartItems]="loggedInUser.cart"></app-order-summary>
+    </div>
+  </div>
+
+<app-wishlist
+  *ngIf="loggedInUser"
+  [wishlistItems]="loggedInUser.wishlist"
+  (removeFromWishlist)="handleRemoveFromWishlist($event)"
+  (moveToCart)="handleMoveToCart($event)">
+  
+</app-wishlist>
+
+
+  <!-- Message if no user found -->
+  <!-- <div *ngIf="searchEmail && !selectedUser">
+  <p>No user found with email: {{ searchEmail }}</p>
+</div> -->
+
+  
+</div>

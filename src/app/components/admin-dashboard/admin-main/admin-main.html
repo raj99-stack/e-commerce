@@ -1,0 +1,40 @@
+<!-- Navbar -->
+<div class="navbar"> 
+  <div class="nav-brand">🛒 Product Manager</div>
+  
+  <div class="nav-links">
+    <div class="nav-item" [class.active]="view==='home'" (click)="view='home'">🏠 Home</div>
+    <div class="nav-item" [class.active]="view==='admin'" (click)="view='admin'">⚙️ Admin</div>
+    <div class="nav-item" [class.active]="view==='reports'" (click)="view='reports'">📊 Reports</div>
+    <div class="nav-item" [class.active]="view==='settings'" (click)="view='settings'">⚙️ Settings</div>
+
+    <!-- ✅ Logout button added -->
+    <button class="logout-btn" (click)="logout()">🚪 Logout</button>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content">
+  <!-- Home -->
+  <div *ngIf="view==='home'">
+    <h2>🏠 Home</h2>
+    <p>Welcome to Product Manager. This is a placeholder Home section.</p>
+  </div>
+
+  <!-- Admin -->
+  <div *ngIf="view==='admin'">
+    <app-admin [productList]="productList" (productAdded)="addProduct($event)"></app-admin>
+  </div>
+
+  <!-- Reports -->
+  <div *ngIf="view==='reports'">
+    <h2>📊 Reports</h2>
+    <p>Analytics and reports will appear here.</p>
+  </div>
+
+  <!-- Settings -->
+  <div *ngIf="view==='settings'">
+    <h2>⚙️ Settings</h2>
+    <p>Configuration options will appear here.</p>
+  </div>
+</div>

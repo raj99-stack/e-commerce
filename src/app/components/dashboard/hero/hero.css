@@ -1,0 +1,138 @@
+/* ============================================================
+   HERO SECTION — Dark + Neon + Minimal
+   ============================================================ */
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.hero-banner {
+  width: 100%;
+  padding: 80px 20px 50px; /* Increased padding for breathability */
+  background: radial-gradient(
+    circle at 50% 0%,
+    color-mix(in oklab, var(--accent) 18%, transparent),
+    transparent 70%
+  );
+  text-align: center;
+  animation: fadeSlideIn 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-title {
+  font-size: clamp(32px, 6vw, 52px); /* Slightly larger scale */
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+  text-shadow: 0 0 25px color-mix(in oklab, var(--accent) 40%, transparent);
+}
+
+.animated-text {
+  display: inline-block;
+  animation: floatText 3s ease-in-out infinite alternate;
+}
+
+/* -----------------------------
+   SEARCH & SORT CONTROLS
+   ----------------------------- */
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: -20px auto 40px; /* Pulls controls slightly into the hero gradient area */
+  padding: 0 20px;
+  max-width: 800px;
+}
+
+.controls input, 
+.controls select {
+  /* background: color-mix(in oklab, var(--text) 5%, transparent); */
+  background-color: black;
+  border: 1px solid color-mix(in oklab, var(--text) 15%, transparent);
+  color: var(--text);
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.controls input {
+  flex: 2; /* Search bar takes more space */
+}
+
+.controls select {
+  flex: 1;
+  cursor: pointer;
+}
+
+/* Subtle Neon Focus State */
+.controls input:focus, 
+.controls select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 15px color-mix(in oklab, var(--accent) 20%, transparent);
+  transform: translateY(-2px);
+}
+
+/* -----------------------------
+   PRODUCT LIST GRID
+   ----------------------------- */
+
+.product-list {
+  width: min(1200px, 92vw);
+  margin: 30px auto 60px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  animation: productFadeIn 0.8s ease-out;
+}
+
+/* Adds a smooth hover lift to your product card component */
+app-product-card {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+app-product-card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+/* -----------------------------
+   ANIMATIONS
+   ----------------------------- */
+
+@keyframes floatText {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-10px); }
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes productFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* -----------------------------
+   RESPONSIVE
+   ----------------------------- */
+
+@media (max-width: 1100px) {
+  .product-list { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 820px) {
+  .product-list { grid-template-columns: repeat(2, 1fr); }
+  .controls { flex-direction: column; width: 100%; }
+  .controls input, .controls select { width: 100%; }
+}
+
+@media (max-width: 520px) {
+  .product-list { grid-template-columns: 1fr; }
+}

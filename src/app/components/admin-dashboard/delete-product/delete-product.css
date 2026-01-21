@@ -1,0 +1,169 @@
+/* ============================================================
+   ADMIN — Delete Products (Neon Dark, Danger Emphasis)
+   ============================================================ */
+
+/* Section wrapper */
+.delete-section {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; /* guard against sideways scroll */
+}
+
+/* Title */
+.form-title {
+  margin: 0 0 14px;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: 0.3px;
+  text-shadow: 0 0 14px color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+/* -----------------------------------
+   GRID OF CARDS
+----------------------------------- */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: 16px;
+  align-items: start;
+  min-width: 0; /* critical in grid */
+}
+
+@media (max-width: 1100px) {
+  .card-container { grid-template-columns: repeat(2, minmax(260px, 1fr)); }
+}
+@media (max-width: 640px) {
+  .card-container { grid-template-columns: 1fr; }
+}
+
+/* -----------------------------------
+   PRODUCT CARD
+----------------------------------- */
+.product-card {
+  background: var(--surface);
+  border: 1px solid #1b2033;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 0 18px rgba(0,0,0,0.35);
+
+  display: grid;
+  grid-template-rows: auto auto auto auto; /* header, desc, price, category */
+  gap: 10px;
+
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  overflow: hidden; /* visual polish */
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  border-color: #ff4e4e; /* danger border on hover */
+  box-shadow: 0 0 20px rgba(255, 60, 60, 0.30);
+}
+
+/* Universal sizing safety inside cards */
+.product-card, .product-card * {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.product-card :where(*, *::before, *::after) { min-width: 0; }
+
+/* -----------------------------------
+   HEADER — name + delete button on right
+----------------------------------- */
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+}
+
+.card-header h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Delete button (danger with red radiance) */
+.delete-icon {
+  flex: 0 0 auto;
+  padding: 8px 14px;
+  font-weight: 700;
+  border-radius: 10px;
+
+  color: #fff;
+  background: #3a0f0f;
+  border: 1px solid #ff4e4e;
+
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease, border-color 160ms ease;
+  white-space: nowrap;
+
+  /* subtle red glow */
+  box-shadow: 0 0 10px rgba(255, 60, 60, 0.4);
+}
+
+.delete-icon:hover {
+  transform: translateY(-2px);
+  background: #550f0f;
+  border-color: #ff2222;
+  box-shadow: 0 0 16px rgba(255, 60, 60, 0.7);
+}
+
+.delete-icon:active {
+  transform: translateY(-1px);
+  background: #400c0c;
+  box-shadow: 0 0 12px rgba(255, 60, 60, 0.5);
+}
+
+/* -----------------------------------
+   BODY TEXT
+----------------------------------- */
+.description {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.35;
+
+  background: var(--surface-2);
+  border: 1px solid #1f2440;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.price {
+  margin: 0;
+  font-weight: 800;
+  color: color-mix(in oklab, var(--accent) 70%, var(--text));
+  background: var(--surface-2);
+  border: 1px solid #1f2440;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.category {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  background: var(--surface-2);
+  border: 1px solid #1f2440;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+/* -----------------------------------
+   ACCESSIBILITY & REDUCED MOTION
+----------------------------------- */
+.delete-icon:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 78, 78, 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-card, .delete-icon { transition: none; }
+}

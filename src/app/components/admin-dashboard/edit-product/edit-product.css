@@ -1,0 +1,183 @@
+
+/* ============================================================
+   ADMIN — Edit Products (Neon Dark, No HTML changes)
+   Layout: responsive card grid with inline editing + Save button
+   ============================================================ */
+
+/* Section wrapper */
+.edit-section {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Title */
+.form-title {
+  margin: 0 0 14px;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: 0.3px;
+  text-shadow: 0 0 14px color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+/* -----------------------------------
+   GRID OF EDITABLE CARDS
+----------------------------------- */
+.card-container {
+  width: 90%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: 16px;
+  align-items: start;
+
+  /* guard against overflow */
+  min-width: 0;
+}
+
+
+@media (max-width: 1100px) {
+  .card-container { grid-template-columns: repeat(2, minmax(260px, 1fr)); }
+}
+@media (max-width: 640px) {
+  .card-container { grid-template-columns: 1fr; }
+}
+
+/* -----------------------------------
+   INDIVIDUAL PRODUCT CARD
+----------------------------------- */
+.product-card {
+  background: var(--surface);
+  border: 1px solid #1b2033;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 0 18px rgba(0,0,0,0.35);
+  width: 250px;
+  display: grid;
+  grid-template-rows: auto auto auto auto; 
+  gap: 10px;
+
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  overflow: hidden; 
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: 0 0 20px color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+/* -----------------------------------
+   HEADER ROW — name input + Save
+----------------------------------- */
+.card-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+
+  min-width: 0; /* allow input to shrink within grid */
+}
+
+/* -----------------------------------
+   INPUTS & TEXTAREA (shared rules)
+----------------------------------- */
+.product-card input[type="text"],
+.product-card input[type="number"],
+.product-card textarea {
+  display: block;
+  width: 90%;
+  max-width: 100%;
+  min-width: 0;
+
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid #24283b;
+  border-radius: 10px;
+  padding: 10px 12px;
+
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+/* remove number arrows (UX) */
+.product-card input[type="number"]::-webkit-outer-spin-button,
+.product-card input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.product-card input[type="number"] { -moz-appearance: textfield; }
+
+.product-card input::placeholder,
+.product-card textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.85;
+}
+
+.product-card input:focus,
+.product-card textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 40%, transparent);
+}
+
+/* Description area */
+.product-card textarea {
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.35;
+}
+
+/* Price & Category inputs (single per row, stacked) */
+
+.product-card input[placeholder="Category"] {
+  /* already 100% width from base rules */
+  width: 89%;
+}
+
+/* -----------------------------------
+   SAVE BUTTON
+----------------------------------- */
+.save-btn {
+  padding: 10px 14px;
+  font-weight: 800;
+  color: var(--text);
+
+  background: color-mix(in oklab, var(--accent) 18%, var(--surface-2));
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  white-space: nowrap; /* keep the button compact */
+}
+
+.save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px color-mix(in oklab, var(--accent) 45%, transparent);
+}
+
+.save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* -----------------------------------
+   VALIDATION HOOKS (optional)
+----------------------------------- */
+.input-error {
+  border-color: #ff4e4e !important;
+  box-shadow: 0 0 0 2px rgba(255, 78, 78, 0.28) !important;
+}
+.input-success {
+  border-color: #00ffa6 !important;
+  box-shadow: 0 0 0 2px rgba(0, 255, 166, 0.25) !important;
+}
+
+/* -----------------------------------
+   REDUCE MOTION
+----------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .product-card,
+  .save-btn,
+  .product-card input,
+  .product-card textarea { transition: none; }
+}

@@ -1,0 +1,125 @@
+
+/* ============================================================
+   MAIN CART PAGE — Neon Dark Theme
+   No HTML changes required
+   ============================================================ */
+
+:host {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* -----------------------------
+   PAGE TITLE
+   ----------------------------- */
+
+h1 {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 900;
+  margin: 20px 0 30px;
+  color: var(--text);
+  letter-spacing: 1px;
+
+  text-shadow: 0 0 22px color-mix(in oklab, var(--accent) 35%, transparent);
+
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* -----------------------------
+   USER INFO SECTION
+   ----------------------------- */
+
+div > h2 {
+  text-align: center;
+  font-size: 18px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 20px;
+  line-height: 1.4;
+
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* -----------------------------
+   CART + ORDER SUMMARY LAYOUT
+   ----------------------------- */
+
+app-cart,
+app-order-summary {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* The cart and summary should align side-by-side on large screens */
+div > app-cart + app-order-summary {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  width: min(1200px, 92vw);
+  margin-inline: auto;
+
+  animation: slideUp 0.5s ease-out;
+}
+
+/* -----------------------------
+   EMPTY CART (centered)
+   ----------------------------- */
+app-empty-cart {
+  display: block;
+  margin: 20px auto;
+  width: min(500px, 90%);
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* -----------------------------
+   WISHLIST SECTION
+   ----------------------------- */
+
+app-wishlist {
+  display: block;
+  width: min(1200px, 92vw);
+  margin: 40px auto 20px;
+  padding: 20px;
+  border-radius: 16px;
+
+  background: var(--surface);
+  border: 1px solid #1b2033;
+  box-shadow: 0 0 20px rgba(0,0,0,0.35);
+
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* -----------------------------
+   ANIMATIONS
+   ----------------------------- */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* -----------------------------
+   RESPONSIVE BEHAVIOR
+   ----------------------------- */
+
+/* Cart + summary stack vertically on smaller screens */
+@media (max-width: 920px) {
+  div > app-cart + app-order-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Adjust spacing for smaller screens */
+@media (max-width: 520px) {
+  h1 { font-size: 26px; }
+  div > h2 { font-size: 16px; }
+  app-wishlist { padding: 16px; }
+}

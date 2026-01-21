@@ -1,0 +1,107 @@
+
+/* ===== App Shell (no HTML changes) ===================================== */
+
+/* Make the root app view a clean page scaffold */
+:host {
+  display: block;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Main content area padding (respects your current ngIf sections) */
+app-auth-page,
+app-hero-page,
+app-main-cart,
+app-admin-main {
+  display: block;
+  width: min(1200px, 92vw);
+  margin-inline: auto;
+  padding-block: 20px 40px;
+  position: relative;
+
+  /* Subtle mount-in animation (applies when ngIf toggles) */
+  opacity: 0;
+  transform: translateY(8px);
+  animation: section-in 260ms cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+@keyframes section-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Navbar is a custom element; we’ll keep it sticky & frosted without html changes */
+app-navbar {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  background: color-mix(in oklab, var(--bg) 80%, transparent);
+  border-bottom: 1px solid #171a28;
+}
+
+/* Footer spacing harmony */
+app-footer-component {
+  display: block;
+  margin-top: 8px;
+  border-top: 1px solid #171a28;
+  background: color-mix(in oklab, var(--bg) 90%, #0b0c10);
+}
+
+/* ===== Global polish for links, focus, and scrollbars =================== */
+:host a { color: var(--text); text-decoration: none; }
+:host a:hover { color: var(--accent); }
+
+:host :is(button, [role="button"], a, input, select, textarea):focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 60%, transparent);
+  border-radius: 10px;
+}
+
+/* Minimal neon divider utility (use where desired via <hr class="app-divider">) */
+.app-divider {
+  height: 1px;
+  margin: 24px 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #22263a 20%,
+    color-mix(in oklab, var(--accent) 24%, #22263a) 50%,
+    #22263a 80%,
+    transparent
+  );
+  border: none;
+}
+
+/* Wider container for admin view tables, without HTML changes.
+   Toggle this from TS if you like by adding a class to <body>. */
+:root.admin-mode app-admin-main {
+  width: min(1320px, 94vw);
+}
+
+/* Responsive padding */
+@media (max-width: 768px) {
+  app-auth-page,
+  app-hero-page,
+  app-main-cart,
+  app-admin-main {
+    padding-block: 14px 28px;
+  }
+}
+
+/* Optional: dark scrollbars with accent */
+:root {
+  scrollbar-color: color-mix(in oklab, var(--accent) 35%, #2a2f45) #0b0c10;
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #0b0c10; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg,
+    color-mix(in oklab, var(--accent) 35%, #2a2f45),
+    #1a1e31
+  );
+  border-radius: 10px;
+  border: 2px solid #0b0c10;
+}

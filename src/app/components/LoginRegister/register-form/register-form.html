@@ -1,0 +1,57 @@
+<!-- <h3>{{ welcome }}</h3>
+<h4>Register</h4>
+
+<input [(ngModel)]="name" placeholder="Name">
+<input [(ngModel)]="email" placeholder="Email">
+<input [(ngModel)]="password" type="password" placeholder="Password">
+<input [(ngModel)]="shippingAddress" placeholder="Shipping Address">
+<input [(ngModel)]="paymentDetails" placeholder="Payment Details">
+
+<button (click)="register()" [disabled]="!valid" [class.ready]="valid">Register</button> -->
+
+
+
+<h3>{{ welcome | uppercase }}</h3>
+<h4>Register</h4>
+
+<form #registerForm="ngForm" (ngSubmit)="processRegister(registerForm)">
+  <!-- Name -->
+  <input 
+    name="name" 
+    [(ngModel)]="name" 
+    placeholder="Name" 
+    required
+    pattern="^[A-Za-z]+$"> <!-- ✅ only letters -->
+  <div *ngIf="registerForm.controls['name']?.errors?.['pattern']">
+    Name must contain only letters.
+  </div>
+
+  <!-- Email -->
+  <input 
+    name="email" 
+    [(ngModel)]="email" 
+    placeholder="Email" 
+    required 
+    email>
+  <div *ngIf="registerForm.controls['email']?.invalid && registerForm.controls['email']?.touched">
+    Valid email is required.
+  </div>
+
+  <!-- Password -->
+  <input 
+    name="password" 
+    [(ngModel)]="password" 
+    type="password" 
+    placeholder="Password" 
+    required
+    minlength="9"
+    pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$">
+  <div *ngIf="registerForm.controls['password']?.errors?.['pattern']">
+    Password must be atleast 8 chars with uppercase, number & special symbol.
+  </div>
+
+  <input name="shippingAddress" [(ngModel)]="shippingAddress" placeholder="Shipping Address">
+  <input name="paymentDetails" [(ngModel)]="paymentDetails" placeholder="Payment Details">
+
+  <button type="submit" [disabled]="registerForm.invalid">Register</button>
+</form>

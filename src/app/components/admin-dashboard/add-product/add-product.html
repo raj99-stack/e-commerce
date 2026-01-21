@@ -1,0 +1,11 @@
+<div class="form-card">
+  <h3 class="form-title">➕ Add New Product</h3>
+  <form (ngSubmit)="onSubmit()" class="admin-form">
+    <input type="text" [(ngModel)]="newProduct.name" name="name" placeholder="Product Name" required />
+    <input type="text" [(ngModel)]="newProduct.description" name="description" placeholder="Description" required />
+    <input type="number" [(ngModel)]="newProduct.price" name="price" placeholder="Price" required />
+    <input type="text" [(ngModel)]="newProduct.category" name="category" placeholder="Category" />
+
+    <button type="submit">Add Product</button>
+  </form>
+</div>

@@ -1,0 +1,22 @@
+<h3>Profile Dashboard</h3>
+
+<div class="profile-box">
+  <label>Name:</label>
+  <input [(ngModel)]="editableProfile.name" />
+
+  <label>Email:</label>
+  <input [(ngModel)]="editableProfile.email" />
+
+  <label>Password:</label>
+  <input [(ngModel)]="editableProfile.password" type="password" />
+
+  <label>Shipping Address:</label>
+  <input [(ngModel)]="editableProfile.shippingAddress" />
+
+  <label>Payment Details:</label>
+  <input [(ngModel)]="editableProfile.paymentDetails" />
+
+  <button (click)="saveChanges()" [disabled]="!valid" [class.ready]="valid">
+    Save Profile
+  </button>
+</div>
