@@ -1,3 +1,4 @@
+<h1>HI</h1>
 <app-navbar *ngIf="loggedInUser?.role !== 'admin'" [currentUser]="loggedInUser" (navigateDashboard)="showSection('dashboard')"
   (navigateLogin)="showSection('login')" (navigateRegister)="showSection('register')"
   (navigateCart)="showSection('cart')" (logout)="handleLogout()"> 
