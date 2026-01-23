@@ -6,19 +6,30 @@ import { ProfileDashboard } from '../profile-dashboard/profile-dashboard';
 import { User, MOCK_USERS } from '../../../models/user';
 import { MOCK_PRODUCTS, Product } from '../../../models/product';
 import { AdminMain } from '../../admin-dashboard/admin-main/admin-main';
+import { Navbar } from '../../shared/navbar/navbar';
+
 @Component({
   selector: 'app-auth-page',
-  imports: [CommonModule, LoginForm, RegisterForm, ProfileDashboard,AdminMain],
-  standalone:true,
+  standalone: true,
+  imports: [
+    CommonModule,
+    LoginForm,
+    RegisterForm,
+    ProfileDashboard,
+    AdminMain,
+  
+  ],
   templateUrl: './auth-page.html',
   styleUrls: ['./auth-page.css'],
 })
 export class AuthPage {
   staticMessage: string = 'Welcome to the E‑Commerce Portal!';
-  users: User[] = [...MOCK_USERS]; // load mock users
+  users: User[] = [...MOCK_USERS];
   showLogin: boolean = true;
   loggedInUser: User | null = null;
   products: Product[] = [...MOCK_PRODUCTS];
+  showProfile: boolean = false;
+
   @Output() userLoggedIn = new EventEmitter<User>();
   @Output() userLoggedOut = new EventEmitter<void>();
 
@@ -27,12 +38,7 @@ export class AuthPage {
     if (found) {
       this.loggedInUser = { ...found };
       this.userLoggedIn.emit(this.loggedInUser);
-
-      if (found.role === 'admin') {
-        alert(`Welcome Admin: ${found.name}`);
-      } else {
-        alert(`Welcome ${found.name}`);
-      }
+      alert(`Welcome ${found.role === 'admin' ? 'Admin' : found.name}`);
     } else {
       alert('Invalid credentials!');
     }
@@ -64,10 +70,11 @@ export class AuthPage {
   signOut() {
     this.loggedInUser = null;
     this.userLoggedOut.emit();
-    this.showLogin = true; // default back to login form
+    this.showLogin = true;
+    this.showProfile = false;
   }
-  private getNextProductId(): number { 
-    const maxId = this.products.reduce((max, p) => Math.max(max, p.id), 0); 
-    return maxId + 1; 
+
+  onNavigateProfile() {
+    this.showProfile = true;
   }
 }

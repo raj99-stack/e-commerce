@@ -1,31 +1,24 @@
 <h2>{{ staticMessage }}</h2>
 
 <div class="layout">
-  <div class="left">
-    <button *ngIf="!loggedInUser" (click)="toggleForm()" [class.active]="showLogin">
+  <div class="left" *ngIf="!loggedInUser">
+    <button (click)="toggleForm()" [class.active]="showLogin">
       {{ showLogin ? 'Switch to Register' : 'Switch to Login' }}
     </button>
 
-    <div *ngIf="!loggedInUser">
-      <div *ngIf="showLogin">
-        <app-login-form [welcome]="staticMessage" (loginEvent)="onLogin($event)"></app-login-form>
-      </div>
-      <div *ngIf="!showLogin">
-        <app-register-form
-          [welcome]="staticMessage"
-          (registerEvent)="onRegister($event)">
-        </app-register-form>
-      </div>
+    <div *ngIf="showLogin">
+      <app-login-form [welcome]="staticMessage" (loginEvent)="onLogin($event)"></app-login-form>
+    </div>
+    <div *ngIf="!showLogin">
+      <app-register-form [welcome]="staticMessage" (registerEvent)="onRegister($event)"></app-register-form>
     </div>
   </div>
-  
+
   <div class="right" *ngIf="loggedInUser">
-    <!-- Admin dashboard -->
     <app-admin-main *ngIf="loggedInUser.role === 'admin'" [productList]="products"></app-admin-main>
 
-    <!-- User profile -->
     <app-profile-dashboard
-      *ngIf="loggedInUser.role === 'user'"
+      *ngIf="showProfile && loggedInUser.role === 'user'"
       [profileData]="loggedInUser"
       (updateEvent)="onProfileUpdate($event)">
     </app-profile-dashboard>

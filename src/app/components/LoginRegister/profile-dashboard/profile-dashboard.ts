@@ -1,43 +1,83 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { CommonModule, TitleCasePipe, DatePipe } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../../models/user';
 
 @Component({
   selector: 'app-profile-dashboard',
-  imports: [FormsModule],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TitleCasePipe,
+    DatePipe
+  ],
   templateUrl: './profile-dashboard.html',
   styleUrls: ['./profile-dashboard.css']
 })
-export class ProfileDashboard {
-  @Input() profileData!: User;   // strongly typed input
+export class ProfileDashboard implements OnInit, OnChanges {
+  @Input() profileData: User | null = null;
   @Output() updateEvent = new EventEmitter<User>();
 
-  // Local editable copy
-  editableProfile: User = {
-  id: 0,
-  name: '',
-  email: '',
-  password: '',
-  shippingAddress: '',
-  paymentDetails: '',
-  cart: [],
-  wishlist: [],
-  role: 'user'   // ✅ required
-};
+  profileForm!: FormGroup;
+  isEditing: boolean = false;
+  lastUpdated: Date = new Date();
 
-  ngOnChanges() {
-    if (this.profileData) {
-      this.editableProfile = { ...this.profileData };
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit() {
+    this.initForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['profileData'] && this.profileData) {
+      this.initForm();
     }
   }
 
-  saveChanges() {
-    this.updateEvent.emit(this.editableProfile);
+  initForm() {
+    this.profileForm = this.fb.group({
+      name: [
+        this.profileData?.name || '',
+        [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)] // ✅ no numbers allowed
+      ],
+      email: [
+        this.profileData?.email || '',
+        [Validators.required, Validators.email] // ✅ proper email format
+      ],
+      password: [
+        this.profileData?.password || '',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
+          // ✅ same regex as register: at least 1 uppercase, 1 number, 1 special char
+        ]
+      ],
+      shippingAddress: [
+        this.profileData?.['shippingAddress'] || '',
+        [Validators.required, Validators.minLength(10)]
+      ]
+    });
   }
 
-  get valid(): boolean {
-    return this.editableProfile.name !== '' &&
-           this.editableProfile.email !== '' &&
-           this.editableProfile.password !== '';
+  enableEdit() {
+    this.isEditing = true;
+  }
+
+  saveChanges() {
+    if (this.profileForm.valid) {
+      const updatedUser: User = { ...this.profileData!, ...this.profileForm.value };
+      this.updateEvent.emit(updatedUser);
+      this.isEditing = false;
+      this.lastUpdated = new Date();
+    } else {
+      this.profileForm.markAllAsTouched();
+    }
+  }
+
+  cancel() {
+    this.isEditing = false;
+    this.initForm();
   }
 }

@@ -1,8 +1,7 @@
-<h1>HI</h1>
 <app-navbar *ngIf="loggedInUser?.role !== 'admin'" [currentUser]="loggedInUser" (navigateDashboard)="showSection('dashboard')"
   (navigateLogin)="showSection('login')" (navigateRegister)="showSection('register')"
-  (navigateCart)="showSection('cart')" (logout)="handleLogout()"> 
-</app-navbar>
+  (navigateCart)="showSection('cart')" (logout)="handleLogout()"
+  (navigateProfile)="showSection('profile')"></app-navbar> 
 
 
 <app-auth-page *ngIf="currentSection === 'login'" (userLoggedIn)="handleLogin($event)" (userLoggedOut)="handleLogout()">
@@ -15,7 +14,12 @@
   (cartUpdated)="loggedInUser = $event; currentSection = 'cart'">
 </app-hero-page>
 
-
+<!-- Profile Dashboard -->
+<app-profile-dashboard 
+  *ngIf="currentSection === 'profile' && loggedInUser?.role === 'user'"
+  [profileData]="loggedInUser!"
+  (updateEvent)="onProfileUpdate($event)">
+</app-profile-dashboard>
 
 
 <app-main-cart *ngIf="currentSection === 'cart' && loggedInUser?.role === 'user'" [loggedInUser]="loggedInUser">

@@ -1,112 +1,80 @@
-
-/* ============================================================
-   LOGIN FORM — No HTML changes required
-   Fixes input overflow + dark/minimal + neon accent
-   ============================================================ */
-
-/* Host container behaves like a tidy section inside the parent card */
-:host {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;            /* block any accidental bleed from children */
+.login-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 40px;
+  background: var(--card-bg, #151824); /* same as profile dashboard */
   border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  text-align: center;
 }
 
-/* Universal sizing discipline */
-:host, :host * {
-  box-sizing: border-box;
-  max-width: 100%;
-}
-:host :where(*, *::before, *::after) {
-  min-width: 0;                /* critical in flex/grid contexts to allow shrink */
+.login-title {
+  font-size: 2rem;
+  margin-bottom: 25px;
+  color: var(--primary-text, whitesmoke);
+  font-weight: 600;
 }
 
-/* Headings */
-h3 {
-  margin: 0 0 6px;
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--text);
-  letter-spacing: 0.3px;
-}
-h4 {
-  margin: 0 0 14px;
-  font-size: 16px;
-  font-weight: 700;
-  color: color-mix(in oklab, var(--accent) 50%, var(--text));
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center; /* center fields */
 }
 
-/* Inputs */
-input {
-  display: block;              /* avoid inline shrinking issues */
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 0 !important;
-  padding: 12px 14px;
-
-  background: var(--surface-2);
-  color: var(--text);
-  border: 1px solid #24283b;
-  border-radius: 10px;
-
-  outline: none;
-  transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
-  margin-bottom: 12px;
-}
-
-input::placeholder {
-  color: var(--muted);
-  opacity: 0.85;
-}
-
-/* Focus accent (subtle) */
-input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 40%, transparent);
-}
-
-/* Button */
-button {
-  display: block;
+.form-group {
   width: 100%;
-  max-width: 100%;
-  min-width: 0;
+  max-width: 400px;
+  text-align: left;
+}
 
-  padding: 12px 16px;
-  font-weight: 700;
-  color: var(--text);
-  background: var(--surface-2);
-  border: 1px solid #1f2440;
-  border-radius: 10px;
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: block;
+  color: var(--secondary-text, #555);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  border-color: var(--primary-color, #0078d7);
+  outline: none;
+}
+
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
-
-  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  font-weight: 500;
+  transition: background 0.3s;
 }
 
-/* Primary/ready state (when [class.ready]) */
-button.ready {
-  background: color-mix(in oklab, var(--accent) 16%, var(--surface-2));
-  border-color: var(--accent);
-  /* restrained glow so it doesn't look like overflow */
-  box-shadow: 0 0 12px color-mix(in oklab, var(--accent) 28%, transparent);
+.login-btn {
+  background: var(--primary-color, #0078d7);
+  color: #fff;
 }
 
-/* Hover lift */
-button:hover {
-  transform: translateY(-1px);
-}
-
-/* Disabled */
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.65;
-  transform: none;
-  box-shadow: none;
-}
-
-/* Small screen polish */
-@media (max-width: 480px) {
-  input { padding: 11px 12px; }
-  button { padding: 11px 12px; }
+.login-btn:hover {
+  background: #005fa3;
 }

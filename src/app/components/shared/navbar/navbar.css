@@ -1,8 +1,6 @@
-
 /* =========================
    Navbar (Header) — Dark + Neon
    File: navbar.component.css
-   No HTML changes required
    ========================= */
 
 /* Root navbar element */
@@ -18,7 +16,6 @@
   height: 64px;
   padding: 0 16px;
 
-  /* Dark translucent surface with subtle frost */
   background: color-mix(in oklab, var(--bg) 82%, transparent);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid #171a28;
@@ -52,7 +49,7 @@
   gap: 10px;
 }
 
-/* Base button style (applies to your existing <button> elements) */
+/* Base button style */
 .nav-actions button {
   appearance: none;
   border: 1px solid #1f2440;
@@ -93,23 +90,19 @@
 }
 
 /* ---------------------------------------------
-   Accent logic using only safe positional rules
+   Accent logic
    ---------------------------------------------
-   Logged in (3 buttons): Dashboard, Cart, Sign Out
-   → Accent the first two buttons.
+   Logged in (buttons): Dashboard, Cart, Profile, Sign Out
+   → Accent all four.
 */
-.nav-actions button:nth-child(1),
-.nav-actions button:nth-child(2) {
+.nav-actions button:nth-child(1), /* Dashboard */
+.nav-actions button:nth-child(2), /* Cart */
+.nav-actions button:nth-child(3), /* Profile */
+.nav-actions button:nth-child(4)  /* Sign Out */
+{
   background: color-mix(in oklab, var(--accent) 16%, var(--surface-2));
   border-color: var(--accent);
   box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 30%, transparent);
-}
-
-/* Keep the 3rd button neutral (Sign Out) */
-.nav-actions button:nth-child(3) {
-  background: var(--surface-2);
-  border-color: #1f2440;
-  box-shadow: none;
 }
 
 /* Logged out (1 button: Login) → accent the single child */

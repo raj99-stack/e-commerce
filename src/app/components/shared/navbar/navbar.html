@@ -8,14 +8,19 @@
   </span>
 
   <!-- Right side: buttons -->
-  <div class="nav-actions">
-    <button *ngIf="!currentUser" (click)="navigateDashboard.emit()">Dashboard</button>
-    <button *ngIf="!currentUser" (click)="navigateLogin.emit()">Login</button>
-    
-    <!-- <button *ngIf="!currentUser" (click)="navigateRegister.emit()">Register</button> -->
+<!-- navbar.html -->
+<div class="nav-actions">
+  <button (click)="navigateDashboard.emit()">Dashboard</button>
 
-    <button *ngIf="currentUser" (click)="navigateDashboard.emit()">Dashboard</button>
-    <button *ngIf="currentUser" (click)="navigateCart.emit()">Cart</button>
-    <button *ngIf="currentUser" (click)="logout.emit()">Sign Out</button>
-  </div>
+  <button *ngIf="!currentUser" (click)="navigateLogin.emit()">Login</button>
+  <!-- <button *ngIf="!currentUser" (click)="navigateRegister.emit()">Register</button> -->
+
+  <button *ngIf="currentUser?.role === 'user'" (click)="navigateCart.emit()">Cart</button>
+  <button *ngIf="currentUser?.role === 'user'" (click)="navigateProfile.emit()">Profile</button>
+
+  <button *ngIf="currentUser" (click)="logout.emit()">Sign Out</button>
+</div>
+
+
+  
 </nav>

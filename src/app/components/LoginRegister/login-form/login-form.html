@@ -1,39 +1,50 @@
-<!-- <h3>{{ welcome }}</h3>
-<h4>Login</h4>
+<div class="login-container">
+  <h2 class="login-title">Login</h2>
 
-<input [(ngModel)]="email" placeholder="Email">
-<input [(ngModel)]="password" type="password" placeholder="Password">
+  <form #loginForm="ngForm" (ngSubmit)="processLogin(loginForm)" class="login-form">
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input 
+        id="email"
+        name="email" 
+        [(ngModel)]="email" 
+        placeholder="Email" 
+        required 
+        email>
+      <small class="error" *ngIf="loginForm.controls['email']?.touched && loginForm.controls['email']?.errors?.['required']">
+        Email is required
+      </small>
+      <small class="error" *ngIf="loginForm.controls['email']?.touched && loginForm.controls['email']?.errors?.['email']">
+        Invalid email format
+      </small>
+    </div>
 
-<button (click)="login()" [disabled]="!valid" [class.ready]="valid">Login</button> -->
+    <!-- Password -->
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input 
+        id="password"
+        name="password" 
+        [(ngModel)]="password" 
+        type="password" 
+        placeholder="Password" 
+        required
+        minlength="6"
+        pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$">
+      <small class="error" *ngIf="loginForm.controls['password']?.touched && loginForm.controls['password']?.errors?.['required']">
+        Password is required
+      </small>
+      <small class="error" *ngIf="loginForm.controls['password']?.touched && loginForm.controls['password']?.errors?.['minlength']">
+        Password must be at least 6 characters
+      </small>
+      <small class="error" *ngIf="loginForm.controls['password']?.touched && loginForm.controls['password']?.errors?.['pattern']">
+        Must contain uppercase, number, and special character
+      </small>
+    </div>
 
-
-<h3>{{ welcome | uppercase }}</h3>
-<h4>Login</h4>
-
-<form #loginForm="ngForm" (ngSubmit)="processLogin(loginForm)">
-  <!-- Email -->
-  <input 
-    name="email" 
-    [(ngModel)]="email" 
-    placeholder="Email" 
-    required 
-    email>
-  <div *ngIf="loginForm.controls['email']?.invalid && loginForm.controls['email']?.touched">
-    Email is required and must be valid.
-  </div>
-
-  <!-- Password -->
-  <input 
-    name="password" 
-    [(ngModel)]="password" 
-    type="password" 
-    placeholder="Password" 
-    required
-    minlength="9"
-    pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$">
-  <div *ngIf="loginForm.controls['password']?.errors?.['pattern']">
-    Password must be atleast 8 chars with uppercase, number & special symbol
-  </div>
-
-  <button type="submit" [disabled]="loginForm.invalid">Login</button>
-</form>
+    <div class="form-actions">
+      <button type="submit" class="btn login-btn" [disabled]="loginForm.invalid">Login</button>
+    </div>
+  </form>
+</div>
