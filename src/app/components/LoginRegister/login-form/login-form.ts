@@ -1,33 +1,33 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../../services/user-service';
+import { User } from '../../../models/user';
+
 @Component({
   selector: 'app-login-form',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './login-form.html',
   styleUrls: ['./login-form.css']
 })
 export class LoginForm {
   @Input() welcome: string = '';
-  @Output() loginEvent = new EventEmitter<any>();
+  @Output() loginSuccess = new EventEmitter<User>();
 
   email: string = '';
   password: string = '';
 
-  login() {
-    this.loginEvent.emit({ email: this.email, password: this.password });
+  constructor(private userService: UserService) {}
+
+  processLogin(form: any) {
+    if (form.valid) {
+      const user = this.userService.login(this.email, this.password);
+      if (user) {
+        alert(`Welcome ${user.name}`);
+        this.loginSuccess.emit(user); // ✅ send user to parent
+      } else {
+        alert('Invalid credentials!');
+      }
+    }
   }
-
-  get valid(): boolean {
-    return this.email !== '' && this.password !== '';
-  }
-
-processLogin(form: any) { 
-  if (form.valid)
-   { 
-    this.loginEvent.emit({ email: this.email, password: this.password });
-   }
- }
-
-  
 }

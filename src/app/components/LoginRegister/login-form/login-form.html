@@ -30,16 +30,9 @@
         type="password" 
         placeholder="Password" 
         required
-        minlength="6"
-        pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$">
+        >
       <small class="error" *ngIf="loginForm.controls['password']?.touched && loginForm.controls['password']?.errors?.['required']">
         Password is required
-      </small>
-      <small class="error" *ngIf="loginForm.controls['password']?.touched && loginForm.controls['password']?.errors?.['minlength']">
-        Password must be at least 6 characters
-      </small>
-      <small class="error" *ngIf="loginForm.controls['password']?.touched && loginForm.controls['password']?.errors?.['pattern']">
-        Must contain uppercase, number, and special character
       </small>
     </div>
 

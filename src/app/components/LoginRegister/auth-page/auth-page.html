@@ -7,10 +7,14 @@
     </button>
 
     <div *ngIf="showLogin">
-      <app-login-form [welcome]="staticMessage" (loginEvent)="onLogin($event)"></app-login-form>
+      <app-login-form 
+              [welcome]="staticMessage" 
+              (loginSuccess)="onLoginSuccess($event)">
+      </app-login-form>
+
     </div>
     <div *ngIf="!showLogin">
-      <app-register-form [welcome]="staticMessage" (registerEvent)="onRegister($event)"></app-register-form>
+      <app-register-form [welcome]="staticMessage"></app-register-form>
     </div>
   </div>
 
@@ -18,11 +22,8 @@
     <app-admin-main *ngIf="loggedInUser.role === 'admin'" [productList]="products"></app-admin-main>
 
     <app-profile-dashboard
-      *ngIf="showProfile && loggedInUser.role === 'user'"
-      [profileData]="loggedInUser"
-      (updateEvent)="onProfileUpdate($event)">
-    </app-profile-dashboard>
+  *ngIf="showProfile && loggedInUser.role === 'user'">
+</app-profile-dashboard>
 
-    <button class="signout-btn" (click)="signOut()">Sign Out</button>
   </div>
 </div>

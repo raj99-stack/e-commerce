@@ -1,5 +1,4 @@
 <nav class="navbar">
-  <!-- Left side: user info or static message -->
   <span *ngIf="currentUser" class="user-info">
     Welcome, {{ currentUser.name }}
   </span>
@@ -7,20 +6,13 @@
     Please log in
   </span>
 
-  <!-- Right side: buttons -->
-<!-- navbar.html -->
-<div class="nav-actions">
-  <button (click)="navigateDashboard.emit()">Dashboard</button>
+  <div class="nav-actions">
+    <button (click)="navigateDashboard.emit()">Dashboard</button>
 
-  <button *ngIf="!currentUser" (click)="navigateLogin.emit()">Login</button>
-  <!-- <button *ngIf="!currentUser" (click)="navigateRegister.emit()">Register</button> -->
+    <button *ngIf="!currentUser" (click)="navigateLogin.emit()">Login</button>
 
-  <button *ngIf="currentUser?.role === 'user'" (click)="navigateCart.emit()">Cart</button>
-  <button *ngIf="currentUser?.role === 'user'" (click)="navigateProfile.emit()">Profile</button>
-
-  <button *ngIf="currentUser" (click)="logout.emit()">Sign Out</button>
-</div>
-
-
-  
+    <button *ngIf="currentUser?.role === 'user'" (click)="navigateCart.emit()">Cart</button>
+<button *ngIf="currentUser?.role === 'user'" (click)="navigateProfile.emit()">My Profile</button> <!-- ✅ added -->
+    <button *ngIf="currentUser" (click)="logout.emit()">Sign Out</button>
+  </div>
 </nav>

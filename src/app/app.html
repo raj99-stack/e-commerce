@@ -1,12 +1,21 @@
-<app-navbar *ngIf="loggedInUser?.role !== 'admin'" [currentUser]="loggedInUser" (navigateDashboard)="showSection('dashboard')"
-  (navigateLogin)="showSection('login')" (navigateRegister)="showSection('register')"
-  (navigateCart)="showSection('cart')" (logout)="handleLogout()"
-  (navigateProfile)="showSection('profile')"></app-navbar> 
+<app-navbar
+  *ngIf="loggedInUser?.role !== 'admin'"
+  [currentUser]="loggedInUser"
+  (navigateDashboard)="showSection('dashboard')"
+  (navigateLogin)="showSection('login')"
+  (navigateRegister)="showSection('register')"
+  (navigateCart)="showSection('cart')"
+  (logout)="handleLogout()"
+  (navigateProfile)="showSection('profile')">
+</app-navbar> 
 
-
-<app-auth-page *ngIf="currentSection === 'login'" (userLoggedIn)="handleLogin($event)" (userLoggedOut)="handleLogout()">
+<!-- Login/Register -->
+<app-auth-page
+  *ngIf="currentSection === 'login'"
+  (userLoggedIn)="handleLogin($event)">
 </app-auth-page>
 
+<!-- Dashboard -->
 <app-hero-page
   *ngIf="currentSection === 'dashboard'"
   [loggedInUser]="loggedInUser"
@@ -15,19 +24,24 @@
 </app-hero-page>
 
 <!-- Profile Dashboard -->
-<app-profile-dashboard 
+<app-profile-dashboard
   *ngIf="currentSection === 'profile' && loggedInUser?.role === 'user'"
   [profileData]="loggedInUser!"
   (updateEvent)="onProfileUpdate($event)">
 </app-profile-dashboard>
 
-
-<app-main-cart *ngIf="currentSection === 'cart' && loggedInUser?.role === 'user'" [loggedInUser]="loggedInUser">
+<!-- Cart -->
+<app-main-cart
+  *ngIf="currentSection === 'cart' && loggedInUser?.role === 'user'"
+  [loggedInUser]="loggedInUser">
 </app-main-cart>
 
-<app-admin-main *ngIf="currentSection === 'admin' && loggedInUser?.role === 'admin'" 
-[productList]="products" 
-(logoutEvent)="handleLogout()"
-(productListChange)="products = $event"> </app-admin-main>
+<!-- Admin -->
+<app-admin-main
+  *ngIf="currentSection === 'admin' && loggedInUser?.role === 'admin'"
+  [productList]="products"
+  (logoutEvent)="handleLogout()"
+  (productListChange)="products = $event">
+</app-admin-main>
 
 <app-footer-component></app-footer-component>

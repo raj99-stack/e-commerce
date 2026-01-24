@@ -2,7 +2,6 @@
   <h2 class="register-title">Register</h2>
 
   <form #registerForm="ngForm" (ngSubmit)="processRegister(registerForm)" class="register-form">
-    
     <!-- Name -->
     <div class="form-group">
       <label for="name">Name</label>
@@ -12,7 +11,7 @@
         [(ngModel)]="name" 
         placeholder="Name" 
         required
-        pattern="^[A-Za-z]+$">
+        pattern="^[A-Za-z\\s]+$">
       <small class="error" *ngIf="registerForm.controls['name']?.touched && registerForm.controls['name']?.errors?.['required']">
         Name is required
       </small>
@@ -91,7 +90,6 @@
       </small>
     </div>
 
-    <!-- Actions -->
     <div class="form-actions">
       <button type="submit" class="btn register-btn" [disabled]="registerForm.invalid">Register</button>
     </div>
