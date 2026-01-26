@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CartService } from '../../../services/cart';
-import { OrderService } from '../../../services/order';
+import { OrderMgmt } from '../../../services/order-mgmt';
 import { CartItem } from '../../../models/user';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -18,7 +18,7 @@ export class OrderSummary {
 
   constructor(
     public cartService: CartService,
-    private orderService: OrderService
+    private orderMgmt: OrderMgmt
   ) {}
 
   get cartItems(): CartItem[] {
@@ -30,25 +30,25 @@ export class OrderSummary {
   }
 
   getOriginalTotal(): number {
-    return this.orderService.getOriginalTotal(this.cartItems);
+    return this.orderMgmt.getOriginalTotal(this.cartItems);
   }
 
   getGrandTotal(): number {
-    return this.orderService.getGrandTotal(this.cartItems, this.discount);
+    return this.orderMgmt.getGrandTotal(this.cartItems, this.discount);
   }
 
   getTotalSavings(): number {
-    return this.orderService.getTotalSavings(this.cartItems, this.discount);
+    return this.orderMgmt.getTotalSavings(this.cartItems, this.discount);
   }
 
   applyCoupon() {
-    this.discount = this.orderService.applyCoupon(this.couponCode, this.cartItems);
+    this.discount = this.orderMgmt.applyCoupon(this.couponCode, this.cartItems);
     if (this.discount === 0 && this.couponCode !== '') {
       alert('Invalid coupon code');
     }
   }
 
   proceedOrder() {
-    this.orderService.placeOrder(this.cartItems);
+    this.orderMgmt.placeOrder(this.cartItems);
   }
 }

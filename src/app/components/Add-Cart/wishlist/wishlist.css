@@ -107,6 +107,12 @@ h3 {
   transform: scale(0.95);
 }
 
+.empty-wishlist {
+  text-align: center;
+  font-size: 18px;
+  color: #666;
+  margin-top: 50px;
+}
 /* 6. Animations */
 @keyframes slideInUp {
   from { opacity: 0; transform: translateY(20px); }
