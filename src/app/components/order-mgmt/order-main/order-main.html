@@ -1,0 +1,19 @@
+<div class="order-container">
+  
+  <nav class="order-sidebar">
+    <h2>My Account</h2>
+    
+    <a routerLink="/orders/dashboard" routerLinkActive="active" class="sidebar-btn">
+      Dashboard
+    </a>
+    
+    <a routerLink="/orders/history" routerLinkActive="active" class="sidebar-btn history-btn">
+      Order History
+    </a>
+  </nav>
+
+  <main class="content-area">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

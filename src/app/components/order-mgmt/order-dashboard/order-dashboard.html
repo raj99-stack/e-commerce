@@ -1,0 +1,35 @@
+<div class="dashboard-stats">
+  <div class="stat-card">
+    <h3>Total Orders</h3>
+    <p class="big-number">{{ stats.totalOrders }}</p>
+  </div>
+
+  <div class="stat-card">
+    <h3>Total Spent</h3>
+    <p class="big-number">{{ stats.totalSpent | currency:'INR' }}</p>
+  </div>
+
+  <div class="stat-card">
+    <h3>Pending Delivery</h3>
+    <p class="big-number">{{ stats.pendingCount }}</p>
+  </div>
+</div>
+<!-- 
+<div class="dashboard-grid">
+  
+  <div class="stat-card">
+    <h3>TOTAL ORDERS</h3>
+    <p class="stat-number">{{ stats.totalOrders }}</p>
+  </div>
+
+  <div class="stat-card">
+    <h3>TOTAL SPENT</h3>
+    <p class="stat-number">{{ stats.totalSpent | currency:'INR' }}</p>
+  </div>
+
+  <div class="stat-card">
+    <h3>PENDING DELIVERY</h3>
+    <p class="stat-number">{{ stats.pendingCount }}</p>
+  </div>
+
+</div> -->
