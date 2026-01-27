@@ -3,34 +3,17 @@
 <div class="admin-layout">
   <!-- Sidebar -->
   <div class="admin-sidebar">
-    <!-- Default view -->
-    <div class="sidebar-item" 
-         [class.active]="selectedOption==='view'" 
-         (click)="selectedOption='view'">
-      👀 View Products
-    </div>
+    <!-- Section header -->
+    <div class="sidebar-section">⚙️ Manage Products</div>
 
-    <!-- Manage Products dropdown -->
-    <div class="sidebar-item manage-toggle" (click)="toggleManageDropdown()">
-      ⚙️ Manage Products 
-      <span class="arrow" [class.open]="showManageDropdown"> 🔽 </span>
-    </div>
-
-    <!-- Dropdown items -->
-    <div class="dropdown" [class.show]="showManageDropdown">
-      <div class="dropdown-item" [class.active]="selectedOption==='add'" (click)="selectedOption='add'">➕ Add Product</div>
-      <div class="dropdown-item" [class.active]="selectedOption==='edit'" (click)="selectedOption='edit'">✏️ Edit Product</div>
-      <div class="dropdown-item" [class.active]="selectedOption==='delete'" (click)="selectedOption='delete'">🗑️ Delete Product</div>
-    </div>
+    <!-- Direct options -->
+    <div class="sidebar-item" [class.active]="selectedOption==='add'" (click)="selectedOption='add'">➕ Add Product</div>
+    <div class="sidebar-item" [class.active]="selectedOption==='edit'" (click)="selectedOption='edit'">✏️ Edit Product</div>
+    <div class="sidebar-item" [class.active]="selectedOption==='delete'" (click)="selectedOption='delete'">🗑️ Delete Product</div>
   </div>
 
   <!-- Content area -->
   <div class="admin-content">
-    <!-- View Products -->
-    <div *ngIf="selectedOption==='view'">
-      <app-view-product [productList]="productList"></app-view-product>
-    </div>
-
     <!-- Add Product -->
     <div *ngIf="selectedOption==='add'">
       <app-add-product (productAdded)="productAdded.emit($event)"></app-add-product>

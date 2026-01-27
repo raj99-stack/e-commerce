@@ -5,7 +5,6 @@
   <div class="nav-links">
     <div class="nav-item" [class.active]="view==='home'" (click)="view='home'">🏠 Home</div>
     <div class="nav-item" [class.active]="view==='admin'" (click)="view='admin'">⚙️ Admin</div>
-    <div class="nav-item" [class.active]="view==='reports'" (click)="view='reports'">📊 Reports</div>
     <div class="nav-item" [class.active]="view==='settings'" (click)="view='settings'">⚙️ Settings</div>
 
     <!-- ✅ Logout button added -->
@@ -17,8 +16,8 @@
 <div class="content">
   <!-- Home -->
   <div *ngIf="view==='home'">
-    <h2>🏠 Home</h2>
-    <p>Welcome to Product Manager. This is a placeholder Home section.</p>
+    <!-- <h2>🏠 Home</h2> -->
+    <app-view-product [productList]="productList"></app-view-product>
   </div>
 
   <!-- Admin -->
@@ -27,10 +26,6 @@
   </div>
 
   <!-- Reports -->
-  <div *ngIf="view==='reports'">
-    <h2>📊 Reports</h2>
-    <p>Analytics and reports will appear here.</p>
-  </div>
 
   <!-- Settings -->
   <div *ngIf="view==='settings'">

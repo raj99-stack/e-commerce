@@ -3,11 +3,12 @@ import { Product } from '../../../models/product';
 import { Admin } from '../admin/admin';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ViewProduct } from '../view-product/view-product';
 
 @Component({
   selector: 'app-admin-main',
   standalone: true,
-  imports: [CommonModule, FormsModule, Admin],
+  imports: [CommonModule, FormsModule, Admin,ViewProduct],
   templateUrl: './admin-main.html',
   styleUrls: ['./admin-main.css'],
 })
@@ -15,7 +16,7 @@ export class AdminMain {
   @Input() productList: Product[] = [];
   @Output() logoutEvent = new EventEmitter<void>();  // ✅ new output
   @Output() productListChange = new EventEmitter<Product[]>();
-  view: string = 'admin';
+  view: string = 'home';
   currIndex: number = 0;
 
   ngOnChanges() {

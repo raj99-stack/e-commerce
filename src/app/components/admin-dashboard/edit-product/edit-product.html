@@ -1,21 +1,35 @@
 <div class="edit-section">
   <h3 class="form-title">✏️ Edit Products</h3>
 
-  <div class="card-container">
-    <div class="product-card" *ngFor="let p of productList">
-      <div class="card-header">
+  <!-- Search + Filter controls -->
+  <div class="controls">
+    <input
+      type="text"
+      placeholder="Search products..."
+      [(ngModel)]="searchTerm"
+    />
 
-        <input [(ngModel)]="p.name" placeholder="Product Name" />
-        <button class="save-btn" (click)="saveProduct(p)">Save</button>
+    <select [(ngModel)]="sortCategory">
+      <option value="">All Categories</option>
+      <option value="Electronics">Electronics</option>
+      <option value="Clothing">Clothing</option>
+      <option value="Books">Books</option>
+    </select>
+  </div>
+
+  <div class="card-container">
+    <div class="product-card" *ngFor="let p of filteredProducts">
+      <div class="card-header">
+        <h4>{{ p.name }}</h4>
+        <div class="actions">
+          <button class="edit-btn" (click)="goToEdit(p.id)">Edit</button>
+          <button class="delete-btn" (click)="goToDelete(p.id)">Delete</button>
+        </div>
       </div>
 
-
-      <textarea [(ngModel)]="p.description" placeholder="Description"></textarea>
-
-
-      <input type="number" [(ngModel)]="p.price" placeholder="Price" />
-
-      <input [(ngModel)]="p.category" placeholder="Category" />
+      <p>{{ p.description }}</p>
+      <p>₹{{ p.price }}</p>
+      <p>{{ p.category || 'Uncategorized' }}</p>
     </div>
   </div>
 </div>

@@ -1,7 +1,5 @@
-
 /* ============================================================
-   ADMIN — Edit Products (Neon Dark, No HTML changes)
-   Layout: responsive card grid with inline editing + Save button
+   ADMIN — Edit Products (Neon Dark)
    ============================================================ */
 
 /* Section wrapper */
@@ -19,22 +17,74 @@
   color: var(--text);
   letter-spacing: 0.3px;
   text-shadow: 0 0 14px color-mix(in oklab, var(--accent) 30%, transparent);
+  text-align: center;
+}
+
+/* -----------------------------------
+   Controls: Search + Category Filter
+----------------------------------- */
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 0 auto 20px;
+  max-width: 800px;
+}
+
+.controls input,
+.controls select {
+  padding: 10px 14px;
+  font-size: 14px;
+  border-radius: 10px;
+  border: 1px solid #24283b;
+  background: var(--surface-2);
+  color: var(--text);
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.controls input {
+  flex: 2; /* search wider */
+}
+
+.controls select {
+  flex: 1; /* dropdown narrower */
+  cursor: pointer;
+}
+
+.controls input:focus,
+.controls select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 40%, transparent);
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 640px) {
+  .controls {
+    flex-direction: column;
+    width: 100%;
+  }
+  .controls input,
+  .controls select {
+    width: 100%;
+  }
 }
 
 /* -----------------------------------
    GRID OF EDITABLE CARDS
 ----------------------------------- */
 .card-container {
-  width: 90%;
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 16px;
   align-items: start;
-
-  /* guard against overflow */
+  margin-inline: auto;
+  padding: 16px;
   min-width: 0;
+  animation: fadeIn 0.8s ease-out;
 }
-
 
 @media (max-width: 1100px) {
   .card-container { grid-template-columns: repeat(2, minmax(260px, 1fr)); }
@@ -52,13 +102,10 @@
   border-radius: 14px;
   padding: 14px;
   box-shadow: 0 0 18px rgba(0,0,0,0.35);
-  width: 250px;
   display: grid;
-  grid-template-rows: auto auto auto auto; 
   gap: 10px;
-
   transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .product-card:hover {
@@ -68,116 +115,56 @@
 }
 
 /* -----------------------------------
-   HEADER ROW — name input + Save
+   HEADER ROW — name + actions
 ----------------------------------- */
 .card-header {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 10px;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-
-  min-width: 0; /* allow input to shrink within grid */
 }
 
 /* -----------------------------------
-   INPUTS & TEXTAREA (shared rules)
+   Action buttons inside card
 ----------------------------------- */
-.product-card input[type="text"],
-.product-card input[type="number"],
-.product-card textarea {
-  display: block;
-  width: 90%;
-  max-width: 100%;
-  min-width: 0;
-
-  background: var(--surface-2);
-  color: var(--text);
-  border: 1px solid #24283b;
-  border-radius: 10px;
-  padding: 10px 12px;
-
-  outline: none;
-  transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+.actions {
+  display: flex;
+  gap: 8px;
 }
 
-/* remove number arrows (UX) */
-.product-card input[type="number"]::-webkit-outer-spin-button,
-.product-card input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-.product-card input[type="number"] { -moz-appearance: textfield; }
-
-.product-card input::placeholder,
-.product-card textarea::placeholder {
-  color: var(--muted);
-  opacity: 0.85;
-}
-
-.product-card input:focus,
-.product-card textarea:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 40%, transparent);
-}
-
-/* Description area */
-.product-card textarea {
-  resize: vertical;
-  min-height: 90px;
-  line-height: 1.35;
-}
-
-/* Price & Category inputs (single per row, stacked) */
-
-.product-card input[placeholder="Category"] {
-  /* already 100% width from base rules */
-  width: 89%;
-}
-
-/* -----------------------------------
-   SAVE BUTTON
------------------------------------ */
-.save-btn {
-  padding: 10px 14px;
-  font-weight: 800;
-  color: var(--text);
-
-  background: color-mix(in oklab, var(--accent) 18%, var(--surface-2));
-  border: 1px solid var(--accent);
-  border-radius: 10px;
-
+.edit-btn,
+.delete-btn {
+  padding: 6px 12px;
+  font-weight: 700;
+  border-radius: 8px;
   cursor: pointer;
-  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
-  white-space: nowrap; /* keep the button compact */
+  transition: 0.2s ease;
 }
 
-.save-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 18px color-mix(in oklab, var(--accent) 45%, transparent);
+.edit-btn {
+  background: color-mix(in oklab, var(--accent) 20%, var(--surface-2));
+  border: 1px solid var(--accent);
+  color: var(--text);
 }
 
-.save-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+.edit-btn:hover {
+  background: var(--accent);
+  color: black;
 }
 
-/* -----------------------------------
-   VALIDATION HOOKS (optional)
------------------------------------ */
-.input-error {
-  border-color: #ff4e4e !important;
-  box-shadow: 0 0 0 2px rgba(255, 78, 78, 0.28) !important;
+.delete-btn {
+  background: #ff4e4e;
+  border: 1px solid #ff4e4e;
+  color: white;
 }
-.input-success {
-  border-color: #00ffa6 !important;
-  box-shadow: 0 0 0 2px rgba(0, 255, 166, 0.25) !important;
+
+.delete-btn:hover {
+  background: #ff1c1c;
 }
 
 /* -----------------------------------
-   REDUCE MOTION
+   Fade-in animation
 ----------------------------------- */
-@media (prefers-reduced-motion: reduce) {
-  .product-card,
-  .save-btn,
-  .product-card input,
-  .product-card textarea { transition: none; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

@@ -1,61 +1,47 @@
 <div class="profile-container">
   <h2 class="profile-title">My Profile</h2>
-
+ 
   <!-- View Mode -->
   <div *ngIf="!isEditing" class="profile-view">
-    <p><strong>Name:</strong> {{ profileData?.name | titlecase }}</p>
-    <p><strong>Email:</strong> {{ profileData?.email }}</p>
-    <p><strong>Shipping Address:</strong> {{ profileData?.shippingAddress }}</p>
-    <p><strong>Last Updated:</strong> {{ lastUpdated | date:'medium' }}</p>
+    <p><strong>Name:</strong> {{ profileData.name }}</p>
+    <p><strong>Email:</strong> {{ profileData.email }}</p>
+    <p><strong>Shipping Address:</strong> {{ profileData.shippingAddress }}</p>
+    <p><strong>Payment Details:</strong> {{ profileData.paymentDetails }}</p>
     <button class="btn edit-btn" (click)="enableEdit()">Edit Profile</button>
   </div>
-
+ 
   <!-- Edit Mode -->
   <form *ngIf="isEditing" [formGroup]="profileForm" (ngSubmit)="saveChanges()" class="profile-form">
     <div class="form-group">
       <label for="name">Name</label>
       <input id="name" formControlName="name" />
-      <small class="error" *ngIf="profileForm.get('name')?.touched && profileForm.get('name')?.invalid">
-        Name is required and cannot contain numbers
-      </small>
     </div>
-
+ 
     <div class="form-group">
       <label for="email">Email</label>
       <input id="email" formControlName="email" />
-      <small class="error" *ngIf="profileForm.get('email')?.touched && profileForm.get('email')?.errors?.['required']">
-        Email is required
-      </small>
-      <small class="error" *ngIf="profileForm.get('email')?.touched && profileForm.get('email')?.errors?.['email']">
-        Invalid email format
-      </small>
     </div>
-
+ 
     <div class="form-group">
       <label for="password">Password</label>
       <input id="password" type="password" formControlName="password" />
-      <small class="error" *ngIf="profileForm.get('password')?.touched && profileForm.get('password')?.errors?.['required']">
-        Password is required
-      </small>
-      <small class="error" *ngIf="profileForm.get('password')?.touched && profileForm.get('password')?.errors?.['minlength']">
-        Password must be at least 6 characters
-      </small>
-      <small class="error" *ngIf="profileForm.get('password')?.touched && profileForm.get('password')?.errors?.['pattern']">
-        Must contain uppercase, number, and special character
-      </small>
     </div>
-
+ 
     <div class="form-group">
       <label for="shippingAddress">Shipping Address</label>
       <textarea id="shippingAddress" formControlName="shippingAddress"></textarea>
-      <small class="error" *ngIf="profileForm.get('shippingAddress')?.touched && profileForm.get('shippingAddress')?.invalid">
-        Shipping address is required (min 10 characters)
-      </small>
     </div>
-
+ 
+    <div class="form-group">
+      <label for="paymentDetails">Payment Details</label>
+      <input id="paymentDetails" formControlName="paymentDetails" />
+    </div>
+ 
     <div class="form-actions">
-      <button type="submit" class="btn save-btn">Save Changes</button>
+      <button type="submit" class="btn save-btn" [disabled]="profileForm.invalid">Save Changes</button>
       <button type="button" class="btn cancel-btn" (click)="cancel()">Cancel</button>
     </div>
   </form>
 </div>
+ 
+ 

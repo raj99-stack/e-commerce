@@ -1,339 +1,94 @@
-
 /* ============================================================
-   ADMIN — Keep Sidebar on the Left (Two‑column Grid, No Overflow)
-   Targets your HTML:
-   <div class="admin-layout">
-     <div class="admin-sidebar">…</div>
-     <div class="admin-content">…</div>
-   </div>
+   ADMIN PAGE — Sidebar + Content (Neon Dark)
    ============================================================ */
 
-/* 1) Reliable two‑column layout */
+/* Layout wrapper */
 .admin-layout {
-  /* Wide but safe canvas */
-  width: min(1400px, 96vw);
-  margin-inline: auto;
-
-  /* Two columns: sidebar (fixed) | content (flex) */
-  display: grid !important;
-  grid-template-columns: 240px 1fr !important;  /* adjust 220–260px if you want */
-
-  column-gap: 16px;
-  row-gap: 0;
-
-  /* Space under your navbar */
-  padding: 16px 0 28px;
-
-  /* Prevent accidental horizontal scroll */
-  max-width: 100%;
-  overflow-x: hidden;
+  display: flex;
+  min-height: 100vh;
 }
 
-/* 2) Sidebar block (left column) */
+/* Sidebar */
 .admin-sidebar {
-  grid-column: 1 / 2 !important;
-  align-self: start;
-
-  background: color-mix(in oklab, var(--bg) 88%, #0b0c10);
-  border: 1px solid #1b2033;
-  border-radius: 14px;
-  padding: 14px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-
+  min-width: 240px; /* ✅ increased width so text fits */
+  background: color-mix(in oklab, var(--bg) 92%, transparent);
+  border-right: 1px solid #1b2033;
+  padding: 20px 14px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-
-  /* Never cause X overflow */
-  max-width: 100%;
-  overflow-x: hidden;
 }
 
-/* (Optional) Make sidebar sticky under the navbar */
-@media (min-width: 721px) {
-  .admin-sidebar {
-    position: sticky;
-    top: 86px; /* navbar height + a little gap; adjust to your 70px bar */
-    max-height: calc(100dvh - 100px);
-    overflow: auto;
-  }
+/* Section header (non-clickable) */
+.sidebar-section {
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--accent) 50%, var(--text));
+  padding: 10px 14px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid #1f2440;
+  letter-spacing: 1px;
+  cursor: default;
+
+  /* ✅ keep text in one line */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* 3) Content block (right column) */
-.admin-content {
-  grid-column: 2 / 3 !important;
-  width: 100%;
-  min-width: 0;           /* CRITICAL so grids/forms don’t force overflow */
-  overflow-x: hidden;
-}
-
-/* Make sure children (product grids/cards) don’t push layout wider */
-.admin-content > *,
-.admin-content .products,
-.admin-content .cards,
-.admin-content .grid {
-  width: 100%;
-  min-width: 0;
-  overflow-x: hidden;
-}
-
-/* 4) Sidebar items (style only; keep what you already had if you prefer) */
+/* Sidebar items (clickable options) */
 .sidebar-item {
-  padding: 12px 14px;
-  border-radius: 10px;
-  font-weight: 700;
-  letter-spacing: .2px;
-  cursor: pointer;
-
-  color: var(--text);
-  background: var(--surface-2);
-  border: 1px solid #1f2440;
-
-  transition: transform 140ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease;
-}
-.sidebar-item:hover { transform: translateY(-1px); border-color: var(--accent); box-shadow: 0 0 16px color-mix(in oklab, var(--accent) 35%, transparent); }
-.sidebar-item.active { background: color-mix(in oklab, var(--accent) 16%, var(--surface-2)); border-color: var(--accent); box-shadow: 0 0 18px color-mix(in oklab, var(--accent) 40%, transparent); }
-
-.manage-toggle { display: flex; align-items: center; justify-content: space-between; }
-.manage-toggle .arrow { transition: transform 160ms ease; display: inline-block; }
-.manage-toggle .arrow.open { transform: rotate(180deg); }
-
-.dropdown {
-  display: grid;
-  gap: 8px;
-  margin-top: 6px;
-  padding-left: 4px;
-  border-left: 2px solid #1f2440;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 220ms ease;
-}
-.dropdown.show { max-height: 240px; }
-
-/* ============================================================
-   ADMIN SIDEBAR — Manage Products dropdown items
-   (Add / Edit / Delete) — neon dark, no HTML changes
-   ============================================================ */
-
-/* Dropdown container (you already have a base—this completes it) */
-.admin-sidebar .dropdown {
-  display: grid;
-  gap: 8px;
-  margin-top: 8px;
-  padding-left: 8px;                  /* a bit more indentation for children */
-  border-left: 2px solid #1f2440;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 240ms ease;
-}
-.admin-sidebar .dropdown.show {
-  max-height: 320px;                  /* enough to reveal all items smoothly */
-}
-
-/* Base item style (shared for add/edit/delete) */
-.admin-sidebar .dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  padding: 10px 12px;
-  border-radius: 10px;
-  font-weight: 700;
-  letter-spacing: .2px;
-  cursor: pointer;
-
-  color: var(--text);
-  background: var(--surface-2);
-  border: 1px solid #1f2440;
-
-  transition:
-    transform 140ms ease,
-    border-color 160ms ease,
-    box-shadow 160ms ease,
-    background 160ms ease,
-    color 160ms ease;
-}
-
-/* Emoji/icon alignment and spacing */
-.admin-sidebar .dropdown-item::before {
-  /* We rely on the emoji already in your HTML; this keeps left text aligned. */
-  content: "";
-}
-
-/* Hover lift + accent border */
-.admin-sidebar .dropdown-item:hover {
-  transform: translateY(-1px);
-  border-color: var(--accent);
-  box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 35%, transparent);
-}
-
-/* Keyboard focus ring */
-.admin-sidebar .dropdown-item:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 60%, transparent);
-}
-
-/* Active (selectedOption = ...) */
-.admin-sidebar .dropdown-item.active {
-  background: color-mix(in oklab, var(--accent) 16%, var(--surface-2));
-  border-color: var(--accent);
-  box-shadow: 0 0 16px color-mix(in oklab, var(--accent) 40%, transparent);
-}
-
-/* ---------------------------
-   Semantic variants
-   --------------------------- */
-
-/* ADD — accent-positive */
-.admin-sidebar .dropdown-item:nth-child(1) {
-  /* Subtle accent wash */
-  background: color-mix(in oklab, var(--accent) 10%, var(--surface-2));
-  border-color: color-mix(in oklab, var(--accent) 50%, #1f2440);
-}
-.admin-sidebar .dropdown-item:nth-child(1):hover {
-  box-shadow: 0 0 16px color-mix(in oklab, var(--accent) 45%, transparent);
-}
-
-/* EDIT — info/cool tone */
-.admin-sidebar .dropdown-item:nth-child(2) {
-  background: linear-gradient(
-    180deg,
-    color-mix(in oklab, #5bc0ff 10%, var(--surface-2)),
-    var(--surface-2)
-  );
-  border-color: color-mix(in oklab, #5bc0ff 50%, #1f2440);
-}
-.admin-sidebar .dropdown-item:nth-child(2):hover {
-  border-color: #5bc0ff;
-  box-shadow: 0 0 16px rgba(91, 192, 255, 0.45);
-}
-
-/* DELETE — danger red, strong contrast */
-.admin-sidebar .dropdown-item:nth-child(3) {
-  background: #2a0d0d;                 /* deep red surface */
-  color: #ff4e4e;
-  border-color: #a33232;
-}
-.admin-sidebar .dropdown-item:nth-child(3):hover {
-  background: #3a0f0f;
-  border-color: #ff2222;
-  box-shadow: 0 0 18px rgba(255, 60, 60, 0.55);
-}
-/* If delete is active, make it clearly destructive */
-.admin-sidebar .dropdown-item:nth-child(3).active {
-  background: #3a0f0f;
-  color: #ff6b6b;
-  border-color: #ff4e4e;
-  box-shadow: 0 0 18px rgba(255, 70, 70, 0.6);
-}
-
-/* Small caption style if you add helper text in future */
-.admin-sidebar .dropdown-item small {
+  padding: 10px 14px;
   color: var(--muted);
-  font-weight: 500;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: 160ms ease;
+  white-space: nowrap; /* ✅ prevent wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Accessibility + motion */
-@media (prefers-reduced-motion: reduce) {
-  .admin-sidebar .dropdown-item { transition: none; }
-  .admin-sidebar .dropdown { transition: none; }
+.sidebar-item:hover {
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid #1f2440;
+  box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 30%, transparent);
 }
 
-/* 5) Responsive: ONLY stack on narrow screens */
-@media (max-width: 720px) {
-  .admin-layout {
-    grid-template-columns: 1fr !important; /* sidebar above content */
-  }
-  .admin-sidebar { grid-column: 1 / -1 !important; position: static; max-height: none; }
-  .admin-content { grid-column: 1 / -1 !important; }
+.sidebar-item.active {
+  color: var(--text);
+  background: color-mix(in oklab, var(--accent) 18%, var(--surface-2));
+  border: 1px solid var(--accent);
+  box-shadow: 0 0 18px color-mix(in oklab, var(--accent) 35%, transparent);
 }
 
-
-/* ============================================================
-   FIX: Sidebar dropdown glow/animation being clipped/hidden
-   ============================================================ */
-
-/* 1) Let the sidebar show child glows past its bounds */
-.admin-sidebar {
-  overflow: visible;             /* allow box-shadows to render outside */
-  /* Keep scrolling behavior for sticky sidebars if you used it */
-}
-@media (min-width: 721px) {
-  .admin-sidebar {
-    /* if you made it sticky earlier */
-    /* position: sticky; top: 86px; */
-    /* DO NOT set overflow: hidden here; prefer overflow-y: auto if needed */
-    overflow-y: auto;            /* vertical scroll only */
-    overflow-x: visible;         /* avoid clipping on X */
-  }
-}
-
-/* 2) The dropdown wrapper should not clip the children */
-.admin-sidebar .dropdown {
-  overflow: visible;             /* previously we had overflow:hidden for height anim */
-  /* Keep the expand animation while allowing visual overflow: */
-  /* If height animation is essential, clip only vertically: */
-  /* overflow-y: clip; overflow-x: visible; */
-  position: relative;            /* establish layer for z-index children */
-  z-index: 10;                   /* above sidebar background layer */
-}
-
-/* 3) Ensure the animated items render above the 'Manage Products' row */
-.admin-sidebar .dropdown-item,
-.admin-sidebar .dropdown-item:hover,
-.admin-sidebar .dropdown-item.active {
-  position: relative; 
-  z-index: 20;                   /* higher than the toggle row */
-  /* Ensure their glows render fully */
-  filter: none;                  /* avoid creating new stacking context unless needed */
-}
-
-/* 4) The 'Manage Products' toggle row should be below the glowing children */
-.admin-sidebar .manage-toggle {
-  position: relative;
-  z-index: 5;                    /* lower than dropdown items */
-  /* Avoid transforms/filters here; they create stacking contexts that trap z-index. */
-  transform: none;
-  filter: none;
-}
-
-/* 5) Avoid global clipping on the sidebar container’s ancestors */
-.admin-layout,
+/* Content area */
 .admin-content {
-  overflow: visible;             /* prevent unexpected clipping at parent levels */
+  flex: 1;
+  padding: 24px;
+  background: var(--bg);
+  overflow-y: auto;
 }
 
-/* 6) If you still need max-height animation on the dropdown,
-      combine with overflow-y only (so X glow isn’t clipped) */
-.admin-sidebar .dropdown {
-  max-height: 0;
-  overflow-y: clip;              /* clip vertically during collapse */
-  overflow-x: visible;           /* allow glow to leak horizontally */
-  transition: max-height 240ms ease;
+/* Responsive tuning */
+@media (max-width: 900px) {
+  .admin-sidebar {
+    min-width: 200px;
+    padding: 16px 10px;
+  }
 }
-.admin-sidebar .dropdown.show {
-  max-height: 320px;
-}
-
-/* 7) If any ancestor uses backdrop-filter/transform/filter,
-      explicitly isolate the sidebar stacking but lift the dropdown above it */
-.admin-sidebar {
-  isolation: isolate;            /* create a root for sidebar layers (optional) */
-}
-.admin-sidebar .dropdown {
-  z-index: 1;
-}
-.admin-sidebar .dropdown-item {
-  z-index: 2;
-}
-
-/* 8) As a last resort (very specific), raise the glow via pseudo-element */
-.admin-sidebar .dropdown-item.active::after {
-  content: "";
-  position: absolute;
-  inset: -6px -8px;              /* extend outside the pill */
-  border-radius: 12px;
-  box-shadow: 0 0 22px color-mix(in oklab, var(--accent) 45%, transparent);
-  z-index: -1;                   /* sits behind item text but inside its stacking context */
-  pointer-events: none;
+@media (max-width: 640px) {
+  .admin-sidebar {
+    min-width: 160px;
+  }
+  .sidebar-section {
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+  .sidebar-item {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
 }

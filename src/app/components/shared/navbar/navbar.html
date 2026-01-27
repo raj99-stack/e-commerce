@@ -9,11 +9,9 @@
   <div class="nav-actions">
     <button *ngIf="!currentUser" (click)="navigateDashboard.emit()">Dashboard</button>
     <button *ngIf="!currentUser" (click)="navigateLogin.emit()">Login</button>
-    
     <button *ngIf="currentUser" (click)="navigateDashboard.emit()">Dashboard</button>
-    
     <button *ngIf="currentUser" (click)="navigateOrders.emit()">Orders</button>
-
+    <button *ngIf="currentUser?.role==='user'" (click)="navigateProfile.emit()">My Profile</button>
     <button *ngIf="currentUser" (click)="navigateCart.emit()">Cart</button>
     <button *ngIf="currentUser" (click)="logout.emit()">Sign Out</button>
   </div>

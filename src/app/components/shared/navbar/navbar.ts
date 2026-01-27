@@ -18,4 +18,5 @@ export class Navbar {
   @Output() navigateCart = new EventEmitter<void>();
   @Output() logout = new EventEmitter<void>();
   @Output() navigateOrders = new EventEmitter<void>();
+  @Output() navigateProfile = new EventEmitter<void>();
 }

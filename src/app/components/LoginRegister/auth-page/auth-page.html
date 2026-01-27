@@ -1,28 +1,30 @@
 <h2>{{ staticMessage }}</h2>
-
+ 
 <div class="layout">
   <div class="left" *ngIf="!loggedInUser">
     <button (click)="toggleForm()" [class.active]="showLogin">
       {{ showLogin ? 'Switch to Register' : 'Switch to Login' }}
     </button>
-
+ 
     <div *ngIf="showLogin">
-      <app-login-form [welcome]="staticMessage" (loginEvent)="onLogin($event)"></app-login-form>
+      <app-login-form
+              [welcome]="staticMessage"
+              (loginSuccess)="onLoginSuccess($event)">
+      </app-login-form>
+ 
     </div>
     <div *ngIf="!showLogin">
-      <app-register-form [welcome]="staticMessage" (registerEvent)="onRegister($event)"></app-register-form>
+      <app-register-form [welcome]="staticMessage"></app-register-form>
     </div>
   </div>
-
+ 
   <div class="right" *ngIf="loggedInUser">
     <app-admin-main *ngIf="loggedInUser.role === 'admin'" [productList]="products"></app-admin-main>
-
+ 
     <app-profile-dashboard
-      *ngIf="showProfile && loggedInUser.role === 'user'"
-      [profileData]="loggedInUser"
-      (updateEvent)="onProfileUpdate($event)">
-    </app-profile-dashboard>
-
-    <button class="signout-btn" (click)="signOut()">Sign Out</button>
+  *ngIf="showProfile && loggedInUser.role === 'user'">
+</app-profile-dashboard>
+ 
   </div>
 </div>
+ 

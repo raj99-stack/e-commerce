@@ -9,10 +9,11 @@ import { MOCK_PRODUCTS, Product } from './models/product';
 import { MainCart } from './components/Add-Cart/main-cart/main-cart';
 import { AdminMain } from './components/admin-dashboard/admin-main/admin-main';
 import { FooterComponent } from './components/shared/footer-component/footer-component';
-
+import { UserService } from './services/user-service';
 // ✅ 1. Import the Order Parent Component
 import { OrderMain } from './components/order-mgmt/order-main/order-main';
 import { Router } from '@angular/router';
+import { ProfileDashboard } from './components/LoginRegister/profile-dashboard/profile-dashboard';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +27,8 @@ import { Router } from '@angular/router';
     MainCart, 
     AdminMain, 
     FooterComponent, 
-    OrderMain
+    OrderMain, 
+    ProfileDashboard
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
@@ -40,7 +42,10 @@ export class App{
   
   title = 'E-Commerce(Shopping Cart)';
   products: Product[] = [...MOCK_PRODUCTS];
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+  private userService: UserService
+  ) {}
+  
   showSection(section: string) {
     this.currentSection = section;
   }
@@ -52,7 +57,19 @@ export class App{
   }
 
   handleLogout() {
+    this.userService.logout();
     this.loggedInUser = null;
-    this.currentSection = 'login'; 
+    this.currentSection = 'dashboard'; 
+  }
+
+  onProfileUpdate(updatedUser: User) {
+    
+  this.userService.updateProfile(updatedUser);   // ✅ persist to service
+
+    this.loggedInUser = updatedUser;
+    alert('Profile updated successfully!');
+    this.currentSection = 'dashboard'; // ✅ go back after update
+ 
+    
   }
 }

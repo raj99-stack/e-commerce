@@ -1,31 +1,55 @@
-
-<app-navbar *ngIf="loggedInUser?.role !== 'admin'" [currentUser]="loggedInUser" (navigateDashboard)="showSection('dashboard')"
-  (navigateLogin)="showSection('login')" (navigateRegister)="showSection('register')"
-  (navigateCart)="showSection('cart')" (logout)="handleLogout()" (navigateOrders)="showSection('orders')"> 
+<app-navbar
+  *ngIf="loggedInUser?.role !== 'admin'"
+  [currentUser]="loggedInUser"
+  (navigateDashboard)="showSection('dashboard')"
+  (navigateLogin)="showSection('login')"
+  (navigateRegister)="showSection('register')"
+  (navigateCart)="showSection('cart')"
+  (logout)="handleLogout()"
+  (navigateOrders)="showSection('orders')"
+  (navigateProfile)="showSection('profile')"
+>
 </app-navbar>
 
-
-<app-auth-page *ngIf="currentSection === 'login'" (userLoggedIn)="handleLogin($event)" (userLoggedOut)="handleLogout()">
+<app-auth-page
+  *ngIf="currentSection === 'login'"
+  (userLoggedIn)="handleLogin($event)"
+  (userLoggedOut)="handleLogout()"
+>
 </app-auth-page>
 
 <app-hero-page
   *ngIf="currentSection === 'dashboard'"
   [loggedInUser]="loggedInUser"
   [products]="products"
-  (cartUpdated)="loggedInUser = $event; currentSection = 'dashboard'">
+  (cartUpdated)="loggedInUser = $event; currentSection = 'dashboard'"
+>
 </app-hero-page>
 
-<app-main-cart *ngIf="currentSection === 'cart' && loggedInUser?.role === 'user'" [loggedInUser]="loggedInUser">
+<app-profile-dashboard
+  *ngIf="currentSection === 'profile' && loggedInUser?.role === 'user'"
+  [profileData]="loggedInUser!"
+  (updateEvent)="onProfileUpdate($event)">
+</app-profile-dashboard>
+
+<app-main-cart
+  *ngIf="currentSection === 'cart' && loggedInUser?.role === 'user'"
+  [loggedInUser]="loggedInUser"
+>
 </app-main-cart>
 <!-- order btn added -->
-<app-order-main 
-  *ngIf="currentSection === 'orders' && loggedInUser?.role === 'user'" 
-  [currentUserId]="loggedInUser?.id"> 
+<app-order-main
+  *ngIf="currentSection === 'orders' && loggedInUser?.role === 'user'"
+  [currentUserId]="loggedInUser?.id"
+>
 </app-order-main>
 
-<app-admin-main *ngIf="currentSection === 'admin' && loggedInUser?.role === 'admin'" 
-[productList]="products" 
-(logoutEvent)="handleLogout()"
-(productListChange)="products = $event"> </app-admin-main>
+<app-admin-main
+  *ngIf="currentSection === 'admin' && loggedInUser?.role === 'admin'"
+  [productList]="products"
+  (logoutEvent)="handleLogout()"
+  (productListChange)="products = $event"
+>
+</app-admin-main>
 
 <app-footer-component></app-footer-component>
