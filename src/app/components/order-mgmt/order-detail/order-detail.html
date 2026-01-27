@@ -68,17 +68,39 @@
       <div class="card actions-card">
         <h3>Actions</h3>
         
-        <button *ngIf="order.status === eOrderStatus.Pending||order.status === eOrderStatus.Shipped" 
-                (click)="cancelOrder()" 
-                class="btn-danger">
-          Cancel Order
-        </button>
+        <div *ngIf="order.status === eOrderStatus.Pending || order.status === eOrderStatus.Shipped">
+          
+          <button *ngIf="!showCancelParams" (click)="initiateCancel()" class="btn-danger">
+            Cancel Order
+          </button>
 
-        <button *ngIf="order.status === eOrderStatus.Delivered" 
-                (click)="returnOrder()" 
-                class="btn-warning">
-          Return Items
-        </button>
+          <div *ngIf="showCancelParams" class="msg-box error-box">
+            <p>Please tell us why you are cancelling:</p>
+            <textarea [(ngModel)]="actionReason" placeholder="e.g. Found a better price..."></textarea>
+            
+            <div class="msg-actions">
+              <button (click)="submitCancel()" class="btn-confirm-danger">Confirm</button>
+              <button (click)="closeActionBox()" class="btn-ghost">Back</button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="order.status === eOrderStatus.Delivered">
+          
+          <button *ngIf="!showReturnParams" (click)="initiateReturn()" class="btn-warning">
+            Return Items
+          </button>
+
+          <div *ngIf="showReturnParams" class="msg-box warning-box">
+            <p>Return Request. What is the issue?</p>
+            <textarea [(ngModel)]="actionReason" placeholder="e.g. Product damaged..."></textarea>
+            
+            <div class="msg-actions">
+              <button (click)="submitReturn()" class="btn-confirm-warning">Submit</button>
+              <button (click)="closeActionBox()" class="btn-ghost">Back</button>
+            </div>
+          </div>
+        </div>
 
         <div *ngIf="order.status === eOrderStatus.Cancelled" class="status-msg error">
           <p>⛔ This order was cancelled.</p>

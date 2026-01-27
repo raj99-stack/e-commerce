@@ -186,3 +186,56 @@ h1 { margin: 0; font-size: 2rem; }
   .details-grid { grid-template-columns: 1fr; } /* Stack columns on mobile */
   .timeline { font-size: 0.8rem; }
 }
+
+/* Container for the reason box */
+.msg-box {
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  animation: slideDown 0.3s ease;
+}
+
+.error-box {
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.4);
+}
+
+.warning-box {
+  background: rgba(217, 119, 6, 0.1);
+  border: 1px solid rgba(217, 119, 6, 0.4);
+}
+
+/* Text Input */
+textarea {
+  width: 100%;
+  box-sizing: border-box; /* ✅ ADD THIS LINE */
+  height: 80px;
+  background: #111;
+  border: 1px solid #444;
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 10px 0;
+  resize: none;
+  font-family: inherit; /* Optional: ensures font matches the rest of the app */
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #a855f7; /* Purple accent */
+}
+
+/* Button Row */
+.msg-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-confirm-danger { background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+.btn-confirm-warning { background: #f59e0b; color: black; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+.btn-ghost { background: transparent; color: #aaa; border: 1px solid #555; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
