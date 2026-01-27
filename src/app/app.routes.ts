@@ -1,22 +1,20 @@
 import { Routes } from '@angular/router';
-import { AuthPage } from './components/LoginRegister/auth-page/auth-page'; 
-import { AdminMain } from './components/admin-dashboard/admin-main/admin-main'; 
-
-import { AddProduct } from './components/admin-dashboard/add-product/add-product'; 
-import { Editproduct } from './components/admin-dashboard/edit-product/edit-product'; 
-// import { EditProductFormComponent } from './admin/products/edit-product-form.component';
-
+import { OrderMain } from './components/order-mgmt/order-main/order-main';
+import { OrderDashboard } from './components/order-mgmt/order-dashboard/order-dashboard';
+import { OrderList } from './components/order-mgmt/order-list/order-list';
+import { OrderDetail } from './components/order-mgmt/order-detail/order-detail';
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: AuthPage },
-  {
-    path: 'admin',
-    component: AdminMain,
-    children: [
-      { path: 'products/add', component: AddProduct },
-      { path: 'products/edit', component: Editproduct },
-    //   { path: 'products/edit/:id', component: EditProductFormComponent }
-    ]
-  },
-  { path: '**', redirectTo: 'login' }
+  // When URL is /orders...
+// Dashboard Route
+  { path: 'orders/dashboard', component: OrderDashboard },
+ 
+  // History Route
+  { path: 'orders/history', component: OrderList },
+ 
+  // ✅ 2. FIX: Add the Detail Route here!
+  // This tells Angular: "If URL is orders/detail/ORD-1003, load OrderDetailComponent"
+  { path: 'orders/detail/:id', component: OrderDetail },
+ 
+  // Default Redirect
+  { path: 'orders', redirectTo: 'orders/dashboard', pathMatch: 'full' }
 ];

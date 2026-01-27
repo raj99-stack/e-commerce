@@ -23,4 +23,3 @@ export interface Order {
   items: OrderItem[];
   productDetails?: any[];
 }
- 
