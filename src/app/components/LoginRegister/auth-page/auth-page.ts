@@ -1,59 +1,51 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router'; // ✅ Import Router
 import { LoginForm } from '../login-form/login-form';
 import { RegisterForm } from '../register-form/register-form';
-import { ProfileDashboard } from '../profile-dashboard/profile-dashboard';
-import { Product, MOCK_PRODUCTS } from '../../../models/product';
-import { AdminMain } from '../../admin-dashboard/admin-main/admin-main';
 import { UserService } from '../../../services/user-service';
 import { User } from '../../../models/user';
- 
+
 @Component({
   selector: 'app-auth-page',
   standalone: true,
   imports: [
     CommonModule,
     LoginForm,
-    RegisterForm,
-    ProfileDashboard,
-    AdminMain,
+    RegisterForm
+    // ❌ Removed ProfileDashboard and AdminMain (Router handles them now)
   ],
   templateUrl: './auth-page.html',
   styleUrls: ['./auth-page.css'],
 })
 export class AuthPage {
   staticMessage: string = 'Welcome to the E-Commerce Portal!';
-  products: Product[] = [...MOCK_PRODUCTS];
+  
+  // We only need to toggle between Login and Register
   showLogin: boolean = true;
-  showProfile: boolean = false;
- 
-  constructor(private userService: UserService) {}
- 
-  get loggedInUser() {
-    return this.userService.getLoggedInUser();
-  }
- 
+
+  constructor(
+    private userService: UserService,
+    private router: Router // ✅ Inject Router
+  ) {}
+
   toggleForm() {
     this.showLogin = !this.showLogin;
   }
- 
-  signOut() {
-    this.userService.logout();
-    this.showLogin = true;
-    this.showProfile = false;
-  }
- 
-  onNavigateProfile() {
-    this.showProfile = true;
-  }
- 
-  @Output() userLoggedIn = new EventEmitter<User>();
- 
+
+  // ✅ New Logic: When user logs in, we Navigate!
   onLoginSuccess(user: User) {
-    this.userLoggedIn.emit(user);   // send user to App
-    this.showLogin = false;
-    this.showProfile = false;
+    console.log('Login successful:', user.name);
+
+    // 1. Ensure Service is updated (if not already done by the form)
+    // We re-confirm the login with the service to ensure state is set
+    this.userService.login(user.email, user.password); 
+
+    // 2. Navigate based on Role
+    if (user.role === 'admin') {
+      this.router.navigate(['/admin']); // Go to Admin Dashboard
+    } else {
+      this.router.navigate(['/home']);  // Go to Shop Home
+    }
   }
 }
- 
- 

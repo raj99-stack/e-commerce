@@ -53,13 +53,18 @@
 
     <div class="sidebar">
       
-      <div class="card info-card">
+<div class="card info-card">
         <h3>Shipping Details</h3>
+        
         <p class="label">Delivery Address</p>
-        <p class="value">789 Road, City, India</p>
+        <p class="value">
+          {{ orderUser?.shippingAddress || 'Address not available' }}
+        </p>
         
         <p class="label">Payment Method</p>
-        <p class="value">UPI (alice@upi)</p>
+        <p class="value">
+          {{ orderUser?.paymentDetails || 'Payment info not available' }}
+        </p>
         
         <p class="label">Order Date</p>
         <p class="value">{{ order.date | date:'medium' }}</p>

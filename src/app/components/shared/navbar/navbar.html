@@ -7,12 +7,30 @@
   </span>
 
   <div class="nav-actions">
-    <button *ngIf="!currentUser" (click)="navigateDashboard.emit()">Dashboard</button>
-    <button *ngIf="!currentUser" (click)="navigateLogin.emit()">Login</button>
-    <button *ngIf="currentUser" (click)="navigateDashboard.emit()">Dashboard</button>
-    <button *ngIf="currentUser" (click)="navigateOrders.emit()">Orders</button>
-    <button *ngIf="currentUser?.role==='user'" (click)="navigateProfile.emit()">My Profile</button>
-    <button *ngIf="currentUser" (click)="navigateCart.emit()">Cart</button>
-    <button *ngIf="currentUser" (click)="logout.emit()">Sign Out</button>
+    
+    <button routerLink="/home" routerLinkActive="active-link">
+      Dashboard
+    </button>
+
+    <button *ngIf="!currentUser" routerLink="/login" routerLinkActive="active-link">
+      Login
+    </button>
+
+    <button *ngIf="currentUser" routerLink="/orders" routerLinkActive="active-link">
+      Orders
+    </button>
+
+    <button *ngIf="currentUser?.role==='user'" routerLink="/profile" routerLinkActive="active-link">
+      My Profile
+    </button>
+
+    <button *ngIf="currentUser" routerLink="/cart" routerLinkActive="active-link">
+      Cart
+    </button>
+
+    <button *ngIf="currentUser" (click)="logout.emit()">
+      Sign Out
+    </button>
+    
   </div>
 </nav>

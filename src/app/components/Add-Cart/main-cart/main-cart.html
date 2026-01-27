@@ -1,13 +1,20 @@
-<div *ngIf="loggedInUser">
+<div class="cart-container" *ngIf="loggedInUser; else loadingOrLogin">
+  
   <div *ngIf="isCartEmpty()">
     <app-empty-cart></app-empty-cart>
   </div>
 
-  <div *ngIf="hasCartItems()">
+  <div *ngIf="hasCartItems()" class="cart-layout">
     <app-cart></app-cart>
-    <app-wishlist></app-wishlist>
     <app-order-summary></app-order-summary>
   </div>
 
-  
+  <app-wishlist></app-wishlist>
+
 </div>
+
+<ng-template #loadingOrLogin>
+  <div style="text-align: center; padding: 50px; color: white;">
+    <p>Please log in to view your cart.</p>
+  </div>
+</ng-template>

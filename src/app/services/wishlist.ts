@@ -14,6 +14,11 @@ export class WishlistService {
     return [...this.wishlist];
   }
 
+  // ✅ ADDED: This method was missing!
+  clearWishlist() {
+    this.wishlist = [];
+  }
+
   addToWishlist(item: CartItem) {
     const exists = this.wishlist.find(w => w.id === item.id);
     if (!exists) {
@@ -21,7 +26,7 @@ export class WishlistService {
     }
   }
 
-  // ✅ Helper: add to wishlist by ID
+  // Helper: add to wishlist by ID
   addToWishlistById(itemId: number) {
     const item = this.cartService.getCart().find(c => c.id === itemId);
     if (item) {

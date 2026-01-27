@@ -1,30 +1,55 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Product, MOCK_PRODUCTS } from '../../../models/product';
-import { User } from '../../../models/user';
-import { ProductCard } from '../product-card/product-card';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router'; // Import Router
+import { ProductCard } from '../product-card/product-card';
+import { Product } from '../../../models/product';
+import { ProductService } from '../../../services/product.service'; // ✅ Import ProductService
+import { UserService } from '../../../services/user-service'; // ✅ Import UserService
+import { User } from '../../../models/user';
 
 @Component({
   selector: 'app-hero-page',
+  standalone: true,
   imports: [CommonModule, ProductCard, FormsModule],
   templateUrl: './hero.html',
   styleUrls: ['./hero.css'],
 })
-export class HeroPage {
+export class HeroPage implements OnInit {
+  
   bannerMessage: string = 'Shop The Latest Products!';
-  @Input() products: Product[] = [];
-  @Input() loggedInUser: User | null = null;
-
-  @Output() cartUpdated = new EventEmitter<User>();
-  @Output() wishlistUpdated=new EventEmitter<User>();
+  
+  // ✅ No more @Input() products! We fetch them.
+  products: Product[] = [];
+  
+  // ✅ No more @Input() loggedInUser! We get it from Service.
+  loggedInUser: User | null = null;
 
   searchTerm: string = '';
   sortCategory: string = '';
 
+  constructor(
+    private productService: ProductService, // ✅ Inject ProductService
+    private userService: UserService,       // ✅ Inject UserService
+    private router: Router
+  ) {}
+
+  ngOnInit() {
+    // 1. Fetch Products
+    this.productService.getProducts().subscribe((data) => {
+      this.products = data;
+    });
+
+    // 2. Get User from Service (Assuming your service has a method or property for this)
+    // If your UserService uses an Observable/Signal, subscribe to it here.
+    // For now, let's assume a method like getCurrentUser() or similar exists.
+    this.loggedInUser = this.userService.loggedInUser; 
+  }
+
   onAddToCart(product: Product) {
     if (!this.loggedInUser) {
       alert('Please login first to add items to cart!');
+      this.router.navigate(['/login']); // ✅ Redirect to login via Router
       return;
     }
 
@@ -33,49 +58,20 @@ export class HeroPage {
       return;
     }
 
-    if (!this.loggedInUser.cart) {
-      this.loggedInUser.cart = [];
-    }
-
-    const existing = this.loggedInUser.cart.find((i) => i.id === product.id);
-    if (existing) {
-      existing.quantity++;
-    } else {
-      this.loggedInUser.cart.push({ ...product, quantity: 1 });
-    }
-    alert("Added to Cart")
-    // ✅ Emit updated user back to App
-    this.cartUpdated.emit(this.loggedInUser);
+    // ✅ Move Logic: Directly call Service instead of emitting event
+    this.userService.addToCart(product);
+    alert("Added to Cart");
   }
-
-
-
-
 
   onAddToWishList(product: Product) {
     if (!this.loggedInUser) {
-      alert('Please login first to add items to cart!');
+      alert('Please login first!');
       return;
     }
-
-    if (this.loggedInUser.role === 'admin') {
-      alert('Admins cannot add products to cart.');
-      return;
-    }
-
-    if (!this.loggedInUser.wishlist) {
-      this.loggedInUser.wishlist = [];
-    }
-
-    const existing = this.loggedInUser.wishlist.find((i) => i.id === product.id);
-    if (existing) {
-      existing.quantity++;
-    } else {
-      this.loggedInUser.wishlist.push({ ...product, quantity: 1 });
-    }
-    alert('Added to wishlist')
-    // ✅ Emit updated user back to App
-    this.wishlistUpdated.emit(this.loggedInUser);
+    
+    // ✅ Move Logic: Directly call Service
+    this.userService.addToWishlist(product);
+    alert('Added to wishlist');
   }
 
   get filteredProducts(): Product[] {

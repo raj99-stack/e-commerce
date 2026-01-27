@@ -3,17 +3,42 @@ import { Order, OrderStatus } from '../models/order';
 import { MOCK_PRODUCTS } from '../models/product'; 
 import { CartItem } from '../models/user';
 import { MOCK_USERS } from '../models/user';
+
 @Injectable({
   providedIn: 'root'
 })
 export class OrderMgmt {
   
   // 1. SHARED STATE
-  activeUserId: number | undefined = 1; 
+  activeUserId: number | undefined; // Removed hardcoded '1' so it starts empty
+
   private deliveryCharge: number = 50;
 
   // 2. MASTER DATA (History Database)
   private orders: Order[] = [
+    // ✅ ADDED: Orders for John Doe (ID: 2)
+    {
+      id: 'ORD-1004',
+      userId: 2,  // <--- John Doe
+      date: '2026-01-22T10:00:00',
+      status: OrderStatus.Delivered,
+      totalAmount: 2000,
+      items: [
+        { productId: 1, quantity: 1, priceAtPurchase: 2000 } // Wireless Headphones
+      ]
+    },
+    {
+      id: 'ORD-1005',
+      userId: 2,  // <--- John Doe
+      date: '2026-01-26T14:30:00',
+      status: OrderStatus.Pending,
+      totalAmount: 45000,
+      items: [
+        { productId: 2, quantity: 1, priceAtPurchase: 45000 } // Smartphone
+      ]
+    },
+
+    // Existing Orders for other users...
     {
       id: 'ORD-1001',
       userId: 3, 
@@ -49,21 +74,19 @@ export class OrderMgmt {
   constructor() { }
 
   // ==============================================================
-  //  SECTION A: CART LOGIC (Updated to match OrderSummary)
+  //  SECTION A: CART LOGIC
   // ==============================================================
 
   getOriginalTotal(cartItems: CartItem[]): number {
     return cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   }
 
-  // ✅ Updated to accept 'discount' from the component
   getGrandTotal(cartItems: CartItem[], discount: number = 0): number {
     const originalTotal = this.getOriginalTotal(cartItems);
     const delivery = originalTotal > 2000 ? 0 : this.deliveryCharge;
     return originalTotal - discount + delivery;
   }
 
-  // ✅ Added this missing method
   getTotalSavings(cartItems: CartItem[], discount: number): number {
     const originalTotal = this.getOriginalTotal(cartItems);
     const deliverySaved = originalTotal > 2000 ? this.deliveryCharge : 0;
@@ -73,21 +96,17 @@ export class OrderMgmt {
   applyCoupon(code: string, cartItems: CartItem[]): number {
     const total = this.getOriginalTotal(cartItems);
     if (code === 'newuser') {
-      return Math.floor(total * 0.1); // Returns the calculated discount
+      return Math.floor(total * 0.1);
     }
     return 0;
   }
 
-  // ✅ THE BRIDGE: Creates the order
   placeOrder(cartItems: CartItem[]) {
-    // We recalculate grand total assuming no discount strictly for the record, 
-    // or you could pass the final amount in if you wanted exact precision.
-    // For now, this is safe:
     const finalAmount = this.getGrandTotal(cartItems, 0); 
     
     const newOrder: Order = {
       id: 'ORD-' + Math.floor(1000 + Math.random() * 9000),
-      userId: this.activeUserId || 0,
+      userId: this.activeUserId || 0, // This now relies on OrderMain setting it, or we pass it in
       date: new Date().toISOString(),
       status: OrderStatus.Pending,
       totalAmount: finalAmount,
@@ -101,17 +120,21 @@ export class OrderMgmt {
     this.orders.unshift(newOrder);
     console.log('Order Placed & Saved:', newOrder);
     alert(`Order placed! Final amount: ₹${finalAmount}`);
-    cartItems.length = 0; // Clear cart
-    const iddd=MOCK_USERS.find(x=>x.id===this.activeUserId);
+    cartItems.length = 0; 
   }
 
   // ==============================================================
-  //  SECTION B: MANAGEMENT LOGIC (History & Status)
+  //  SECTION B: MANAGEMENT LOGIC
   // ==============================================================
 
   getOrdersForUser(userId?: number): Order[] {
+    // Priority: Use the ID passed in (from OrderList), otherwise fallback to activeUserId
     const targetId = userId ?? this.activeUserId;
-    if (!targetId) return [];
+    
+    if (!targetId) {
+      console.warn("getOrdersForUser called with no ID!");
+      return [];
+    }
 
     const userOrders = this.orders.filter(order => order.userId === targetId);
 
