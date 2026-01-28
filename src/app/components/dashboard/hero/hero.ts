@@ -54,6 +54,10 @@ export class HeroPage implements OnInit {
     // If your UserService uses an Observable/Signal, subscribe to it here.
     // For now, let's assume a method like getCurrentUser() or similar exists.
 
+    // 2. Get User from Service (Assuming your service has a method or property for this)
+    // If your UserService uses an Observable/Signal, subscribe to it here.
+    // For now, let's assume a method like getCurrentUser() or similar exists.
+
   onAddToCart(product: Product) {
     if (!this.loggedInUser) {
       alert('Please login first to add items to cart!');
