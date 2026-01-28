@@ -17,7 +17,7 @@ export class AddProduct {
     id: 0,
     name: '',
     description: '',
-    price: 0,
+    price: null as any,
     category: '',
     imageUrl: 'assets/image.png'
   };
@@ -34,7 +34,7 @@ export class AddProduct {
     alert('✅ Product has been added successfully!');
  
     // Reset form
-    this.newProduct = { id: 0, name: '', description: '', price: 0, category: '', imageUrl: 'assets/image.png' };
+    this.newProduct = { id: 0, name: '', description: '', price: null as any, category: '', imageUrl: 'assets/image.png' };
  
     // Redirect to product list
     this.router.navigate(['/admin/products']);

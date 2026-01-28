@@ -83,7 +83,6 @@
   border-color: var(--accent);
   box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 40%, transparent);
 }
-
 /* Submit button */
 .admin-form button[type="submit"] {
   margin-top: 6px;

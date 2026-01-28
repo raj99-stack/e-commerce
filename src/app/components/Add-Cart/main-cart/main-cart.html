@@ -1,5 +1,4 @@
 <div class="cart-container" *ngIf="loggedInUser; else loadingOrLogin">
-  
   <div *ngIf="isCartEmpty()">
     <app-empty-cart></app-empty-cart>
   </div>
@@ -8,15 +7,11 @@
     <app-cart></app-cart>
     <app-wishlist></app-wishlist>
     <app-order-summary></app-order-summary>
-
   </div>
-
-  
-
 </div>
 
 <ng-template #loadingOrLogin>
-  <div style="text-align: center; padding: 50px; color: white;">
+  <div style="text-align: center; padding: 50px; color: white">
     <p>Please log in to view your cart.</p>
   </div>
 </ng-template>

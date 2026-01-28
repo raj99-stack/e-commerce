@@ -16,7 +16,7 @@
     </div>
  
     <!-- Price -->
-    <input type="number" [(ngModel)]="newProduct.price" name="price" placeholder="Price" required min="1" #price="ngModel" />
+    <input type="number" [(ngModel)]="newProduct.price" name="price" placeholder="Enter price(₹)" required min="1" #price="ngModel" />
     <div class="error" *ngIf="price.invalid && price.touched">
       <small *ngIf="price.errors?.['required']">Price is required.</small>
       <small *ngIf="price.errors?.['min']">Price must be greater than 0.</small>
