@@ -1,8 +1,9 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../../models/user';
- 
+import { UserService } from '../../../services/user-service';
+
 @Component({
   selector: 'app-profile-dashboard',
   standalone: true,
@@ -11,46 +12,51 @@ import { User } from '../../../models/user';
   styleUrls: ['./profile-dashboard.css']
 })
 export class ProfileDashboard implements OnInit {
-  @Input() profileData!: User;                     // ✅ parent passes loggedInUser
-  @Output() updateEvent = new EventEmitter<User>(); // ✅ emit updated user
- 
+  profileData!: User;
   profileForm!: FormGroup;
   isEditing: boolean = false;
- 
-  constructor(private fb: FormBuilder) {}
- 
+
+  constructor(private fb: FormBuilder, private userService: UserService) {}
+
   ngOnInit() {
-    this.initForm();
+    // ✅ Subscribe to current user
+    this.userService.currentUser$.subscribe(user => {
+      if (user) {
+        this.profileData = user;
+        this.initForm();
+      }
+    });
   }
- 
+
   initForm() {
+    if (!this.profileData) return;
     this.profileForm = this.fb.group({
-      name: [this.profileData?.name || '', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
-      email: [this.profileData?.email || '', [Validators.required, Validators.email]],
-      password: [this.profileData?.password || '', [
+      name: [this.profileData.name, [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]],
+      email: [this.profileData.email, [Validators.required, Validators.email]],
+      password: [this.profileData.password, [
         Validators.required,
         Validators.minLength(6),
         Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
       ]],
-      shippingAddress: [this.profileData?.shippingAddress || '', [Validators.required, Validators.minLength(10)]],
-      paymentDetails: [this.profileData?.paymentDetails || '', [Validators.required]]
+      shippingAddress: [this.profileData.shippingAddress, [Validators.required, Validators.minLength(10)]],
+      paymentDetails: [this.profileData.paymentDetails, [Validators.required]]
     });
   }
- 
+
   enableEdit() {
     this.isEditing = true;
   }
- 
+
   saveChanges() {
     if (this.profileForm.valid) {
       const updatedUser: User = { ...this.profileData, ...this.profileForm.value };
-      this.updateEvent.emit(updatedUser); // ✅ send updated user to parent
+      this.userService.updateProfile(updatedUser); // ✅ update via service
       this.isEditing = false;
     } else {
       this.profileForm.markAllAsTouched();
     }
   }
- 
+
   cancel() {
     this.isEditing = false;
     this.initForm();

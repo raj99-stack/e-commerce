@@ -1,140 +1,184 @@
 /* ============================================================
-   CART — Sleek & Compact Dark Theme
+   CART — Refined & Interactive Dark Theme
    ============================================================ */
 
 :host {
   display: block;
   padding: 20px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 h3 {
   text-align: center;
-  font-size: 20px;
+  font-size: 18px;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  color: var(--text);
-  margin-bottom: 30px;
-  opacity: 0.8;
+  letter-spacing: 4px;
+  color: #fff;
+  margin-bottom: 40px;
+  opacity: 0.9;
 }
 
 /* -----------------------------------
    CONTAINER & CARDS
 ----------------------------------- */
 .cart-container {
-  max-width: 900px; /* Reduced width for tighter feel */
+  max-width: 1000px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
 }
 
 .cart-card {
-  background: #121212;
-  border-radius: 8px;
-  padding: 16px; /* Reduced from 24px */
-  border: 1px solid #222;
-  transition: all 0.3s ease;
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #333;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s, box-shadow 0.3s;
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
   animation: slideIn 0.4s ease-out;
 }
 
 .cart-card:hover {
-  border-color: var(--accent);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transform: translateY(-5px);
+  border-color: #444;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
 }
 
 /* -----------------------------------
    TEXT & INFO
 ----------------------------------- */
 .cart-card h4 {
-  font-size: 16px;
-  margin: 0 0 10px 0;
-  color: #fff;
+  font-size: 17px;
+  margin: 0 0 12px 0;
+  color: #efefef;
   font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .cart-card p {
-  margin: 4px 0;
-  font-size: 13px;
-  color: #888;
+  margin: 6px 0;
+  font-size: 14px;
+  color: #aaa;
   display: flex;
   justify-content: space-between;
 }
 
 .cart-card p strong {
-  color: var(--accent);
-  font-weight: 600;
+  color: #fff;
+  font-weight: 700;
 }
 
 /* -----------------------------------
-   STREAMLINED BUTTONS
+   DYNAMIC BUTTONS
 ----------------------------------- */
 .cart-actions {
-  margin-top: 15px;
+  margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
 }
 
 .cart-actions button {
   border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
+  padding: 10px 14px;
+  border-radius: 6px;
   font-weight: 700;
   font-size: 11px;
   cursor: pointer;
   text-transform: uppercase;
-  transition: all 0.2s;
-  flex: 1; /* Makes buttons share row space */
+  transition: all 0.2s ease;
+  flex: 1;
   min-width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Quantity Adjusters - Smaller & Square */
+/* Quantity Adjusters */
 .remove-btn, .add-btn {
-  background: #222;
+  background: #333;
   color: white;
-  font-size: 14px !important;
-  max-width: 40px; 
+  font-size: 16px !important;
+  max-width: 45px;
 }
 
+.remove-btn:hover {
+  background: #444;
+  color: #ff9f43; /* Warm Orange */
+}
+
+.add-btn:hover {
+  background: #444;
+  color: #55efc4; /* Fresh Green */
+}
+
+/* Wishlist Button */
 .wishlist-btn {
-  background: #2a2a2a;
-  color: var(--accent);
-  border: 1px solid #333 !important;
+  background: rgba(162, 155, 254, 0.1);
+  color: #a29bfe;
+  border: 1px solid rgba(162, 155, 254, 0.2) !important;
 }
 
+.wishlist-btn:hover {
+  background: #a29bfe;
+  color: #fff !important;
+  box-shadow: 0 0 15px rgba(162, 155, 254, 0.4);
+}
+
+/* Delete Button */
 .delete-btn {
-  background: rgba(255, 78, 78, 0.1);
-  color: #ff4e4e !important;
-  border: 1px solid rgba(255, 78, 78, 0.2) !important;
+  background: rgba(255, 118, 117, 0.1);
+  color: #ff7675;
+  border: 1px solid rgba(255, 118, 117, 0.2) !important;
 }
 
-.cart-actions button:hover {
-  filter: brightness(1.3);
-  background: var(--accent); /* Unified hover feel */
-  color: #000 !important;
+.delete-btn:hover {
+  background: #ff7675;
+  color: #fff !important;
+  box-shadow: 0 0 15px rgba(255, 118, 117, 0.4);
+}
+
+/* Global Button Active State */
+.cart-actions button:active {
+  transform: scale(0.95);
 }
 
 /* -----------------------------------
-   TOTAL
+   TOTAL SECTION
 ----------------------------------- */
 .total {
-  margin-top: 40px;
+  margin: 50px auto;
+  max-width: 400px;
   text-align: center;
-  font-size: 16px;
-  color: #666;
-  border-top: 1px solid #222;
-  padding-top: 20px;
+  font-size: 14px;
+  color: #888;
+  border-top: 1px solid #333;
+  padding-top: 25px;
+  letter-spacing: 1px;
 }
 
 .total strong {
+  display: block;
   color: #fff;
-  font-size: 22px;
-  margin-left: 10px;
+  font-size: 28px;
+  margin-top: 10px;
+  text-shadow: 0 0 20px rgba(255,255,255,0.1);
 }
 
+/* -----------------------------------
+   ANIMATIONS
+----------------------------------- */
 @keyframes slideIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
 }

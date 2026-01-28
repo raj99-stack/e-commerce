@@ -10,11 +10,13 @@ import { OrderMain } from './components/order-mgmt/order-main/order-main';
 import { OrderDashboard } from './components/order-mgmt/order-dashboard/order-dashboard';
 import { OrderList } from './components/order-mgmt/order-list/order-list';
 import { OrderDetail } from './components/order-mgmt/order-detail/order-detail';
+import { RegisterForm } from './components/LoginRegister/register-form/register-form';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HeroPage },
   { path: 'login', component: AuthPage },
+  {path: 'register', component:RegisterForm},
   { path: 'cart', component: MainCart },
   { path: 'profile', component: ProfileDashboard },
   { path: 'admin', component: AdminMain },

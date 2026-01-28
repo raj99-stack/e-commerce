@@ -30,8 +30,15 @@ export class AuthPage {
   ) {}
 
   toggleForm() {
-    this.showLogin = !this.showLogin;
+  if (this.showLogin) {
+    // Currently showing login → go to register
+    this.router.navigate(['/register']);
+  } else {
+    // Currently showing register → go to login
+    this.router.navigate(['/login']);
   }
+}
+
 
   // ✅ New Logic: When user logs in, we Navigate!
   onLoginSuccess(user: User) {

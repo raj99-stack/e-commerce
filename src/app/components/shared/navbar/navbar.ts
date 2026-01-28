@@ -1,19 +1,25 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router'; // ✅ Import RouterModule
+import { RouterModule } from '@angular/router';
 import { User } from '../../../models/user';
+import { UserService } from '../../../services/user-service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule], // ✅ Add RouterModule to imports
+  imports: [CommonModule, RouterModule],
   templateUrl: './navbar.html',
   styleUrls: ['./navbar.css']
 })
 export class Navbar {
   @Input() currentUser: User | null = null;
-
-  // We only keep 'logout' because the parent might want to handle cleanup.
-  // All other navigation is now handled by the template.
   @Output() logout = new EventEmitter<void>();
+
+  cartCount: number = 0;
+
+  constructor(private userService: UserService) {
+    this.userService.cartCount$.subscribe(count => {
+      this.cartCount = count;   // ✅ updates automatically
+    });
+  }
 }

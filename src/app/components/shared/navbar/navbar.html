@@ -7,7 +7,6 @@
   </span>
 
   <div class="nav-actions">
-    
     <button routerLink="/home" routerLinkActive="active-link">
       Dashboard
     </button>
@@ -25,12 +24,12 @@
     </button>
 
     <button *ngIf="currentUser" routerLink="/cart" routerLinkActive="active-link">
-      Cart
+      Cart 
+      <span class="badge" *ngIf="cartCount > 0">🛒{{ (cartCount) }}</span>
     </button>
 
     <button *ngIf="currentUser" (click)="logout.emit()">
       Sign Out
     </button>
-    
   </div>
 </nav>
