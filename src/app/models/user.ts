@@ -36,12 +36,7 @@ export const MOCK_USERS: User[] = [
     password: 'John1234@',
     shippingAddress: '123 Street, City',
     paymentDetails: 'Visa **** 1234',
-    cart: [{
-    id: 1,
-    name: 'Wireless Headphones',
-    price: 2000,  
-    quantity:2
-  }],
+    cart: [],
     wishlist: [],
     role: 'user'
   },
