@@ -52,7 +52,7 @@ export class CartService {
 
   // Helpers
   isEmpty(): boolean {
-    return this.cart.length === 0 || this.cart.every(i => i.quantity === 0);
+    return this.cart.length === 0;
   }
 
   hasItems(): boolean {

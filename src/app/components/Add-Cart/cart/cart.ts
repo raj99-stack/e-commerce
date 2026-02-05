@@ -46,7 +46,7 @@ export class Cart {
       if (item) {
         const exists = this.loggedInUser.wishlist.find(w => w.id === item.id);
         if (!exists) {
-          this.loggedInUser.wishlist.push({ ...item });
+          this.loggedInUser.wishlist.push({ ...item});
           this.userService.updateProfile(this.loggedInUser);
         }
         this.cartService.deleteItem(id);
@@ -59,12 +59,12 @@ export class Cart {
     return item.price * item.quantity;
   }
 
-  getTotal(): number {
-    return this.cartItems.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
-  }
+  // getTotal(): number {
+  //   return this.cartItems.reduce(
+  //     (sum, item) => sum + item.price * item.quantity,
+  //     0
+  //   );
+  // }
 
   // helper to keep cart in sync with user profile
   private syncCart() {
